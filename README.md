@@ -4,15 +4,19 @@
 AI Developer • IoT Engineer • UI/UX Enthusiast
 </p>
 
+<p align="center">
+Designing systems that are intelligent, reliable, and intuitive.
+</p>
+
 ---
 
-## About
+## About Me
 
 I’m a Computer Science student specializing in **Artificial Intelligence and Machine Learning** at Karunya University.
 
-My focus is on building **intelligent systems and real-world applications**, combining software engineering with thoughtful design.
+I enjoy building **real-world intelligent systems**, combining software engineering with thoughtful design.
 
-Areas of interest:
+My interests include:
 
 - Artificial Intelligence
 - Internet of Things
@@ -23,21 +27,18 @@ Areas of interest:
 
 ## Tech Stack
 
-**Languages**
-
+### Languages
 Python • Java • JavaScript • SQL
 
-**Technologies**
-
+### Technologies
 Artificial Intelligence • Machine Learning • IoT • Arduino
 
-**Tools**
-
+### Tools
 Git • Linux • MySQL • VS Code • Figma
 
 ---
 
-## Featured Projects
+## Selected Projects
 
 ### AI Smart Ambulance System
 A real-time emergency response system with patient health monitoring and automated traffic signal control.
@@ -53,10 +54,10 @@ A private AI assistant capable of voice interaction and system-level control.
 
 ---
 
-## GitHub Stats
+## GitHub Statistics
 
 <p align="center">
-<img src="https://github-readme-stats.vercel.app/api?username=YOURUSERNAME&show_icons=true&hide_border=true"/>
+<img src="https://github-readme-stats.vercel.app/api?username=YOURUSERNAME&show_icons=true&hide_border=true&count_private=true"/>
 </p>
 
 <p align="center">
@@ -67,10 +68,10 @@ A private AI assistant capable of voice interaction and system-level control.
 
 ## Current Focus
 
-- Developing AI + IoT systems  
-- Building practical Python tools  
+- Building AI-powered applications  
+- Developing IoT-based intelligent systems  
 - Improving UI/UX design skills  
-- Creating innovative software projects
+- Creating practical Python tools
 
 ---
 
@@ -80,6 +81,6 @@ A private AI assistant capable of voice interaction and system-level control.
 
 ---
 
-## Contact
+## Connect
 
 Instagram: @flynnmaxwel
