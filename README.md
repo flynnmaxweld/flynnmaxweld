@@ -1,96 +1,102 @@
 <h1 align="center">Flynn Maxwel D</h1>
 
 <p align="center">
-Systems Developer • AI & Automation • UI/UX Enthusiast
+Systems Developer • AI Automation • UI/UX Explorer
 </p>
 
 <p align="center">
-Building intelligent systems, automation tools, and thoughtful digital experiences.
+Designing intelligent systems with clean interfaces and thoughtful automation.
 </p>
 
 ---
 
-## About Me
+## About
 
-I am a Computer Science student specializing in **Artificial Intelligence and Machine Learning** at Karunya University.
+I’m a Computer Science student specializing in **Artificial Intelligence and Machine Learning**.
 
-My focus is on **building intelligent systems and automation tools** that solve real-world problems. I enjoy working at the intersection of **software engineering, artificial intelligence, and system design**.
+My work focuses on building **automation systems, intelligent software, and developer tools** that combine solid engineering with thoughtful user experience.
 
 Areas of interest:
 
-- Systems Automation
-- Artificial Intelligence
-- Internet of Things
-- UI/UX Design
+• Systems Automation  
+• Artificial Intelligence  
+• Intelligent Workflows  
+• UI/UX Design  
 
 ---
 
 ## Tech Stack
 
-![Python](https://img.shields.io/badge/Python-Programming-blue)
-![AI](https://img.shields.io/badge/Artificial%20Intelligence-ML-purple)
-![Automation](https://img.shields.io/badge/System-Automation-green)
-![React](https://img.shields.io/badge/React-Frontend-blue)
+**Languages**
 
-### Languages
 Python • Java • JavaScript • SQL
 
-### Technologies
-Artificial Intelligence • System Automation • IoT • LLM Integration
+**Systems**
 
-### Tools
-Git • Linux • MySQL • VS Code • Figma
+Linux • Event-Driven Architecture • Automation
+
+**Artificial Intelligence**
+
+LLM Integration • AI Systems • Data Processing
+
+**Tools**
+
+Git • VS Code • MySQL • Figma
 
 ---
 
 ## Selected Projects
 
-### Systems Automation — Smart File Organizer
+### Smart File Organizer  
+*Systems Automation*
 
-A **headless Python daemon** designed to automate digital asset organization using event-driven architecture.
+A headless Python daemon designed to classify and route digital assets automatically using event-driven architecture.
 
-The system monitors directories in real time and automatically classifies and routes files based on **content analysis and metadata patterns**, eliminating manual file management.
+The system monitors directories in real time and organizes files using content analysis and metadata patterns.
 
-**Technologies**
+Technologies
 
 Python  
+Watchdog  
 OS Event Loop  
-Watchdog (Filesystem Monitoring)
+Filesystem Automation  
 
 ---
 
-### A.R.I.S. — Advanced Response Intelligence System
+### A.R.I.S.  
+*Advance Response Intelligence System*
 
-A **tactical intelligence framework** designed to simulate system vulnerabilities and generate real-time mitigation strategies using large language models.
+A tactical intelligence framework that simulates complex system vulnerabilities and generates mitigation strategies.
 
-The system analyzes potential threat scenarios, models system weaknesses, and proposes defensive responses dynamically.
+The system uses LLM-driven threat modeling to analyze system weaknesses and recommend defensive responses.
 
-**Technologies**
+Technologies
 
 Gemini AI  
-Logic-Based Threat Modeling  
-React Interface
+Logic Gates  
+React  
+Threat Modeling  
 
 ---
 
-## GitHub Statistics
+## GitHub Activity
 
 <p align="center">
-<img src="https://github-readme-stats.vercel.app/api?username=YOURUSERNAME&show_icons=true&hide_border=true&count_private=true"/>
+<img src="https://github-readme-stats.vercel.app/api?username=YOURUSERNAME&show_icons=true&hide_border=true&theme=default"/>
 </p>
 
 <p align="center">
-<img src="https://github-readme-stats.vercel.app/api/top-langs/?username=YOURUSERNAME&layout=compact&hide_border=true"/>
+<img src="https://github-readme-stats.vercel.app/api/top-langs/?username=YOURUSERNAME&layout=compact&hide_border=true&theme=default"/>
 </p>
 
 ---
 
 ## Current Focus
 
-- Building advanced automation systems
-- Integrating AI into real-world applications
-- Improving UI/UX design skills
-- Developing scalable software systems
+• Building advanced automation tools  
+• Integrating AI into real-world systems  
+• Designing developer-friendly interfaces  
+• Developing scalable software systems  
 
 ---
 
