@@ -1,37 +1,42 @@
 <h1 align="center">Flynn Maxwel D</h1>
 
 <p align="center">
-AI Developer • IoT Engineer • UI/UX Enthusiast
+Systems Developer • AI & Automation • UI/UX Enthusiast
 </p>
 
 <p align="center">
-Designing systems that are intelligent, reliable, and intuitive.
+Building intelligent systems, automation tools, and thoughtful digital experiences.
 </p>
 
 ---
 
 ## About Me
 
-I’m a Computer Science student specializing in **Artificial Intelligence and Machine Learning** at Karunya University.
+I am a Computer Science student specializing in **Artificial Intelligence and Machine Learning** at Karunya University.
 
-I enjoy building **real-world intelligent systems**, combining software engineering with thoughtful design.
+My focus is on **building intelligent systems and automation tools** that solve real-world problems. I enjoy working at the intersection of **software engineering, artificial intelligence, and system design**.
 
-My interests include:
+Areas of interest:
 
+- Systems Automation
 - Artificial Intelligence
 - Internet of Things
-- Python Development
 - UI/UX Design
 
 ---
 
 ## Tech Stack
 
+![Python](https://img.shields.io/badge/Python-Programming-blue)
+![AI](https://img.shields.io/badge/Artificial%20Intelligence-ML-purple)
+![Automation](https://img.shields.io/badge/System-Automation-green)
+![React](https://img.shields.io/badge/React-Frontend-blue)
+
 ### Languages
 Python • Java • JavaScript • SQL
 
 ### Technologies
-Artificial Intelligence • Machine Learning • IoT • Arduino
+Artificial Intelligence • System Automation • IoT • LLM Integration
 
 ### Tools
 Git • Linux • MySQL • VS Code • Figma
@@ -40,17 +45,31 @@ Git • Linux • MySQL • VS Code • Figma
 
 ## Selected Projects
 
-### AI Smart Ambulance System
-A real-time emergency response system with patient health monitoring and automated traffic signal control.
+### Systems Automation — Smart File Organizer
 
-### AI Mood-Based Lighting System
-An adaptive lighting and music system that responds to user mood.
+A **headless Python daemon** designed to automate digital asset organization using event-driven architecture.
 
-### Project Lazarus
-A self-healing AI system that restores deleted or corrupted files.
+The system monitors directories in real time and automatically classifies and routes files based on **content analysis and metadata patterns**, eliminating manual file management.
 
-### F.R.I.D.A.Y Personal AI Assistant
-A private AI assistant capable of voice interaction and system-level control.
+**Technologies**
+
+Python  
+OS Event Loop  
+Watchdog (Filesystem Monitoring)
+
+---
+
+### A.R.I.S. — Advanced Response Intelligence System
+
+A **tactical intelligence framework** designed to simulate system vulnerabilities and generate real-time mitigation strategies using large language models.
+
+The system analyzes potential threat scenarios, models system weaknesses, and proposes defensive responses dynamically.
+
+**Technologies**
+
+Gemini AI  
+Logic-Based Threat Modeling  
+React Interface
 
 ---
 
@@ -68,10 +87,10 @@ A private AI assistant capable of voice interaction and system-level control.
 
 ## Current Focus
 
-- Building AI-powered applications  
-- Developing IoT-based intelligent systems  
-- Improving UI/UX design skills  
-- Creating practical Python tools
+- Building advanced automation systems
+- Integrating AI into real-world applications
+- Improving UI/UX design skills
+- Developing scalable software systems
 
 ---
 
