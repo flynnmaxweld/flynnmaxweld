@@ -1,111 +1,62 @@
-<h1 align="center">Flynn Maxwel D</h1>
+<h1 align="center">Hi there! 👋</h1>
 
 <p align="center">
-Systems Developer • AI Automation • UI/UX Explorer
+I'm <b>Flynn Maxwel D</b>, a computer science student specializing in <b>AI and Machine Learning</b>, passionate about building intelligent systems and automation tools.
 </p>
 
 <p align="center">
-Designing intelligent systems with clean interfaces and thoughtful automation.
+I enjoy turning complex problems into simple, efficient solutions — whether it's designing automation systems, building AI tools, or creating clean developer experiences.
 </p>
 
 ---
 
-## About
+## 🧠 Tech Stack
 
-I’m a Computer Science student specializing in **Artificial Intelligence and Machine Learning**.
+![Python](https://img.shields.io/badge/python-3670A0?style=flat&logo=python&logoColor=white)
+![Java](https://img.shields.io/badge/java-orange?style=flat&logo=openjdk&logoColor=white)
+![JavaScript](https://img.shields.io/badge/javascript-yellow?style=flat&logo=javascript&logoColor=black)
+![SQL](https://img.shields.io/badge/sql-blue?style=flat)
 
-My work focuses on building **automation systems, intelligent software, and developer tools** that combine solid engineering with thoughtful user experience.
+![Linux](https://img.shields.io/badge/linux-black?style=flat&logo=linux&logoColor=white)
+![Git](https://img.shields.io/badge/git-red?style=flat&logo=git&logoColor=white)
+![Arduino](https://img.shields.io/badge/arduino-teal?style=flat&logo=arduino&logoColor=white)
 
-Areas of interest:
-
-• Systems Automation  
-• Artificial Intelligence  
-• Intelligent Workflows  
-• UI/UX Design  
-
----
-
-## Tech Stack
-
-**Languages**
-
-Python • Java • JavaScript • SQL
-
-**Systems**
-
-Linux • Event-Driven Architecture • Automation
-
-**Artificial Intelligence**
-
-LLM Integration • AI Systems • Data Processing
-
-**Tools**
-
-Git • VS Code • MySQL • Figma
+![Figma](https://img.shields.io/badge/figma-purple?style=flat&logo=figma&logoColor=white)
 
 ---
 
-## Selected Projects
+## 🚀 Projects
 
-### Smart File Organizer  
-*Systems Automation*
+### Smart File Organizer
+A **headless Python daemon** that automatically classifies and routes files using event-driven architecture and metadata analysis.
 
-A headless Python daemon designed to classify and route digital assets automatically using event-driven architecture.
-
-The system monitors directories in real time and organizes files using content analysis and metadata patterns.
-
-Technologies
-
-Python  
-Watchdog  
-OS Event Loop  
-Filesystem Automation  
+Technologies  
+Python • Watchdog • OS Event Loop
 
 ---
 
 ### A.R.I.S.  
-*Advance Response Intelligence System*
+**Advance Response Intelligence System**
 
-A tactical intelligence framework that simulates complex system vulnerabilities and generates mitigation strategies.
+A tactical intelligence framework that simulates system vulnerabilities and generates mitigation strategies using LLM-based analysis.
 
-The system uses LLM-driven threat modeling to analyze system weaknesses and recommend defensive responses.
-
-Technologies
-
-Gemini AI  
-Logic Gates  
-React  
-Threat Modeling  
+Technologies  
+Gemini AI • Logic Gates • React
 
 ---
 
-## GitHub Activity
+## 📊 GitHub Stats
 
 <p align="center">
-<img src="https://github-readme-stats.vercel.app/api?username=YOURUSERNAME&show_icons=true&hide_border=true&theme=default"/>
+<img src="https://github-readme-stats.vercel.app/api?username=YOURUSERNAME&show_icons=true&theme=github_dark&hide_border=true"/>
 </p>
 
 <p align="center">
-<img src="https://github-readme-stats.vercel.app/api/top-langs/?username=YOURUSERNAME&layout=compact&hide_border=true&theme=default"/>
+<img src="https://streak-stats.demolab.com/?user=YOURUSERNAME&theme=github-dark&hide_border=true"/>
 </p>
 
 ---
 
-## Current Focus
-
-• Building advanced automation tools  
-• Integrating AI into real-world systems  
-• Designing developer-friendly interfaces  
-• Developing scalable software systems  
-
----
-
-## Philosophy
-
-> Take risk only when you are ready to face the failure.
-
----
-
-## Connect
-
-Instagram: @flynnmaxwel
+<p align="center">
+Always open to learning, collaborating, and building something great.
+</p>
