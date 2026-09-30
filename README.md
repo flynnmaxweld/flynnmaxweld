@@ -1,30 +1,128 @@
-# Flynn Maxwel &mdash; Vibecoder
+<div align="center">
 
-Designing, building, and automating intelligent applications from New Delhi, India.
+# Flynn Maxwel
+
+### Computer Science · AI/ML · Builder
+
+Building software, experimenting with AI, and exploring the space between
+technology and design.
+
+<br>
+
+[ **Portfolio** ](https://flynnmaxwel.vercel.app/) · [ **Repositories** ](https://github.com/flynnmaxweld?tab=repositories)
+
+</div>
+
+<br>
 
 ---
 
+## About
+
+I'm a B.Tech Computer Science student specializing in **Artificial Intelligence & Machine Learning**.
+
+I enjoy building practical software, experimenting with AI systems, and turning ideas into things that actually work.
+
+Currently exploring **AI/ML, computer vision, Linux, IoT, interactive systems, and 3D.**
+
+---
+
+## Selected work
+
+<table>
+<tr>
+<td width="50%">
+
+### AERIS-POD
+
+Autonomous emergency response system designed to assist survivors during coastal disasters.
+
+**AI · Computer Vision · Blender · React**
+
+</td>
+<td width="50%">
+
+### VOID AI Workspace
+
+An experimental workspace built around AI-assisted development and productivity.
+
+**JavaScript · AI · Desktop**
+
+</td>
+</tr>
+
+<tr>
+<td width="50%">
+
+### Smart File Organizer
+
+A desktop application that automatically organizes files into meaningful categories.
+
+**Python · PySide6**
+
+</td>
+<td width="50%">
+
+### Personal Portfolio
+
+A visual space documenting my projects, experiments and creative work.
+
+**React · CSS · UI/UX**
+
+</td>
+</tr>
+</table>
+
+---
+
+## Toolbox
+
+**Languages**
+
+`Python` `JavaScript` `HTML` `CSS` `Dart`
+
+**Frameworks & Tools**
+
+`React` `PySide6` `Git` `Linux` `Blender`
+
+**Areas**
+
+`AI / ML` `Computer Vision` `IoT` `LLMs` `UI / UX`
+
+---
+
+## GitHub activity
+
 <div align="center">
-<img src="./assets/contrib-heatmap.svg" width="860" alt="Flynn Maxwel's GitHub contributions" />
+
+![GitHub Contribution Graph](https://ghchart.rshah.org/flynnmaxweld)
+
+</div>
+
+<br>
+
+<div align="center">
+
+<img src="https://github-readme-stats.vercel.app/api?username=flynnmaxweld&show_icons=true&hide_border=true&bg_color=00000000&title_color=888888&text_color=888888&icon_color=888888&rank_icon=github" height="160">
+
+<img src="https://github-readme-stats.vercel.app/api/top-langs/?username=flynnmaxweld&layout=compact&hide_border=true&bg_color=00000000&title_color=888888&text_color=888888" height="160">
+
 </div>
 
 ---
 
-### 🛠️ Tech Stack &amp; Skills
+## Currently
 
-| Category | Technologies |
-| :--- | :--- |
-| **Languages &amp; Core** | ![](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white) ![](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black) ![](https://img.shields.io/badge/React-20232A?style=flat-square&logo=react&logoColor=61DAFB) |
-| **Frameworks &amp; Web** | ![](https://img.shields.io/badge/Next.js-black?style=flat-square&logo=next.js&logoColor=white) ![](https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=node.js&logoColor=white) |
-| **Databases &amp; Systems** | ![](https://img.shields.io/badge/SQL-CC292B?style=flat-square&logo=sqlite&logoColor=white) ![](https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white) |
+**Building** → AERIS-POD  
+**Learning** → Computer Vision & AI Systems  
+**Exploring** → Linux · 3D · Human-Computer Interaction
 
 ---
 
-### 📂 /works
+<div align="center">
 
-- [**flynnmaxweld.github.io**](https://flynnmaxweld.github.io) &mdash; Personal Space &amp; Portfolio
-- [**github.com/flynnmaxweld**](https://github.com/flynnmaxweld) &mdash; Open Source Repositories &amp; Experiments
+[Portfolio](https://flynnmaxwel.vercel.app/) · [GitHub](https://github.com/flynnmaxweld)
 
-### 🔗 /connect
+<sub>© 2026 Flynn Maxwel</sub>
 
-[![Portfolio](https://img.shields.io/badge/Portfolio-0d1117?style=flat-square&logo=github&logoColor=white)](https://flynnmaxweld.github.io) &nbsp; [![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white)](https://linkedin.com/in/flynnmaxwel)
+</div>
