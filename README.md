@@ -1,26 +1,34 @@
-# Flynn Maxwel &mdash; Vibecoder
-
-Designing, building, and automating intelligent applications from New Delhi, India.
-
----
-
 <div align="center">
-  <img src="./assets/contrib-heatmap.svg" alt="Flynn Maxwel Contributions" />
+  <img src="./assets/zen-header.svg" width="600" alt="Flynn Maxwel — Vibecoder" />
 </div>
 
----
+<div align="center">
 
-### Stack
+*Designing, building, and automating intelligent applications from Tirunelveli, Tamil Nadu.*
 
-<img src="https://skillicons.dev/icons?i=python,js,ts,react,nextjs,nodejs,fastapi,postgres,docker,git,linux" alt="Tech Stack" />
+</div>
+
+<br/>
+
+<div align="center">
+  <img src="./assets/contrib-heatmap.svg" alt="Activity Flow" />
+</div>
+
+<br/>
+
+### Craft &amp; Tools
+
+<img src="https://skillicons.dev/icons?i=python,js,ts,react,nextjs,nodejs,fastapi,postgres,docker,git,linux&theme=dark" alt="Craft & Tools" />
 
 ---
 
 ### Works
 
-- [**flynnmaxweld.github.io**](https://flynnmaxweld.github.io) &mdash; Personal space, interactive experiments & engineering notes
-- [**AI & Automation Agents**](https://github.com/flynnmaxweld) &mdash; Autonomous agent pipelines, LLM utilities, and fullstack tools
+- [**flynnmaxweld.github.io**](https://flynnmaxweld.github.io) &mdash; Personal space & digital garden
+- [**Intelligent Agents & Systems**](https://github.com/flynnmaxweld) &mdash; Autonomous pipelines, LLM utilities & experiments
 - [**github.com/flynnmaxweld**](https://github.com/flynnmaxweld) &mdash; Open source repositories & experiments
+
+---
 
 ### Connect
 

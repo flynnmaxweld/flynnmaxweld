@@ -1,25 +1,24 @@
 """
-Generate a Pure Minimalist GitHub Profile README & Frameless Contribution Heatmap.
-Design:
-  - Zero heavy banners, zero boxes, zero chassis borders
-  - Pure native markdown typography: "# Flynn Maxwel — Vibecoder"
-  - Frameless, 100% transparent contribution heatmap (just grid dots + labels)
-  - Inline clean monochrome devicons for tech stack
-  - Minimalist links for /works and /connect
+Generate a Japanese Minimalist (Wabi-Sabi / Ma / Zen) GitHub profile README & dynamic SVGs.
+Aesthetic:
+  - English only (no Japanese characters)
+  - Japanese Zen design principles: Ma (negative space), Kanso (simplicity), Shizen (natural balance)
+  - Vermilion / Crimson sun seal accent (#bc002d / #d33833), sumi ink charcoal (#12151a), washi paper tones (#f6f8fa / #8b949e)
+  - Frameless, peaceful organic contribution dots (moss/jade hues #1b382b -> #2d8a56 -> #4ade80)
+  - Elegant vertical balance and serene typography
 """
 import os
 import json
 import urllib.request
 import re
 import datetime
+import html
 from html.parser import HTMLParser
 import xml.etree.ElementTree as ET
 
-# Ensure directories exist
 os.makedirs("assets", exist_ok=True)
 os.makedirs(os.path.join(".github", "workflows"), exist_ok=True)
 
-# Load configuration
 CONFIG_PATH = "profile_config.json"
 if not os.path.exists(CONFIG_PATH):
     raise FileNotFoundError(f"Configuration file {CONFIG_PATH} not found.")
@@ -28,8 +27,10 @@ with open(CONFIG_PATH, "r", encoding="utf-8") as f:
     config = json.load(f)
 
 USERNAME = config.get("github_username", "flynnmaxweld")
-DISPLAY_NAME = config.get("display_name", "Flynn Maxwel D")
-TAGLINE = config.get("tagline", "Designing, building, and automating intelligent applications from New Delhi, India.")
+BRAND_NAME = html.escape(config.get("brand_name", "FLYNN MAXWEL"))
+TITLE = html.escape(config.get("title", "Vibecoder"))
+TAGLINE = config.get("tagline", "Designing, building, and automating intelligent applications from Tirunelveli, Tamil Nadu.")
+LOCATION = html.escape(config.get("location", "Tirunelveli, Tamil Nadu"))
 FEATURED_WORKS = config.get("featured_works", [])
 SOCIALS = config.get("social_links", [])
 
@@ -89,7 +90,61 @@ def fetch_contributions_data():
 
 
 # -----------------------------------------------------------------------------
-# 2. Transparent & Frameless Contribution Heatmap SVG
+# 2. Japanese Minimalist Header SVG (Vermilion Enso / Red Sun Seal Accent)
+# -----------------------------------------------------------------------------
+def generate_zen_header():
+    W, H = 840, 150
+
+    svg = f'''<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}" fill="none">
+  <defs>
+    <style>
+      .zen-name {{
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', serif;
+        font-size: 32px;
+        font-weight: 300;
+        letter-spacing: 12px;
+        fill: #f0f6fc;
+      }}
+      .zen-title {{
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        font-size: 11px;
+        font-weight: 500;
+        letter-spacing: 6px;
+        text-transform: uppercase;
+        fill: #8b949e;
+      }}
+      .zen-loc {{
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        font-size: 10px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        fill: #6e7681;
+      }}
+    </style>
+  </defs>
+
+  <!-- Vermilion Red Sun Stamp / Zen Seal Accent (Hanko motif) -->
+  <circle cx="{W/2}" cy="38" r="8" fill="#bc002d" fill-opacity="0.9"/>
+  <circle cx="{W/2}" cy="38" r="14" stroke="#bc002d" stroke-width="0.75" stroke-opacity="0.35"/>
+
+  <!-- Centered Calm Typography -->
+  <text x="{W/2 + 6}" y="88" class="zen-name" text-anchor="middle">{BRAND_NAME}</text>
+  <text x="{W/2 + 3}" y="112" class="zen-title" text-anchor="middle">{TITLE}</text>
+
+  <!-- Subtle Minimal Center Divider Line -->
+  <line x1="{W/2 - 60}" y1="130" x2="{W/2 + 60}" y2="130" stroke="#30363d" stroke-width="0.75"/>
+</svg>'''
+
+    ET.fromstring(svg)
+
+    out_path = os.path.join("assets", "zen-header.svg")
+    with open(out_path, "w", encoding="utf-8") as f:
+        f.write(svg)
+    print(f"Generated Japanese Zen Header: {out_path}")
+
+
+# -----------------------------------------------------------------------------
+# 3. Frameless Moss-Jade Contribution Matrix (Organic Zen garden aesthetic)
 # -----------------------------------------------------------------------------
 def generate_contributions():
     raw_days = fetch_contributions_data()
@@ -122,16 +177,16 @@ def generate_contributions():
     if not contribs:
         contribs = raw_days
 
-    CELL, GAP, RAD, LEFT, TOP = 12, 3.5, 2.5, 30, 22
-    # Clean GitHub Emerald Palette with transparent background
-    COLORS = ["#161b22", "#0e4429", "#006d32", "#26a641", "#39d353"]
-    GRAY = "#7d8590"
+    CELL, GAP, RAD, LEFT, TOP = 11, 4, 3, 28, 22
+    # Moss & Bamboo Japanese Zen hues
+    COLORS = ["#161b22", "#133a27", "#1d633d", "#2da44e", "#39d353"]
+    GRAY = "#6e7681"
     MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
 
     n = len(contribs)
     NW = (n + 6) // 7
     W = LEFT + NW * (CELL + GAP) + 10
-    H = TOP + 7 * (CELL + GAP) + 8
+    H = TOP + 7 * (CELL + GAP) + 10
 
     labels = []
     rects = []
@@ -144,8 +199,8 @@ def generate_contributions():
             last_m = d.month
             labels.append(f'<text class="lbl" x="{LEFT+wk*(CELL+GAP)}" y="{TOP-8}">{MONTHS[d.month-1]}</text>')
 
-    for name, r in [("Mon", 1), ("Wed", 3), ("Fri", 5)]:
-        labels.append(f'<text class="lbl" x="2" y="{TOP+r*(CELL+GAP)+CELL-3}">{name}</text>')
+    for name, r in [("M", 1), ("W", 3), ("F", 5)]:
+        labels.append(f'<text class="lbl" x="6" y="{TOP+r*(CELL+GAP)+CELL-3}">{name}</text>')
 
     REVEAL, DUR = 2.4, 0.4
     maxorder = (NW - 1) + 6 * 0.55
@@ -161,20 +216,18 @@ def generate_contributions():
             f'fill="{COLORS[lvl]}" style="animation-delay:{delay}s"/>'
         )
 
-    # 100% Transparent, frameless SVG
     svg = f'''<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}" fill="none">
   <defs>
     <style>
-      text.lbl {{ fill:{GRAY}; font-size:10px; font-weight:500; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; }}
+      text.lbl {{ fill:{GRAY}; font-size:9.5px; font-weight:500; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', monospace; }}
       .c {{ transform-box:fill-box; transform-origin:center; opacity:0; animation:pop {DUR}s ease-out both; }}
       .g {{ animation:pop {DUR}s ease-out both, flash {DUR+0.15}s ease-out both; }}
-      @keyframes pop {{ 0%{{opacity:0;transform:scale(.2)}} 60%{{opacity:1;transform:scale(1.05)}} 100%{{opacity:1;transform:scale(1)}} }}
+      @keyframes pop {{ 0%{{opacity:0;transform:scale(.2)}} 60%{{opacity:1;transform:scale(1.04)}} 100%{{opacity:1;transform:scale(1)}} }}
       @keyframes flash {{ 0%{{filter:brightness(2)}} 50%{{filter:brightness(2)}} 100%{{filter:brightness(1)}} }}
       @media (prefers-reduced-motion: reduce) {{ .c {{ opacity:1 !important; animation:none !important; }} }}
     </style>
   </defs>
 
-  <!-- Frameless Transparent Grid -->
   {"".join(labels)}
   {"".join(rects)}
 </svg>'''
@@ -183,37 +236,43 @@ def generate_contributions():
 
     with open(out_path, "w", encoding="utf-8") as f:
         f.write(svg)
-    print(f"Generated Frameless Heatmap: {out_path}")
+    print(f"Generated Frameless Zen Heatmap: {out_path}")
     return True
 
 
 # -----------------------------------------------------------------------------
-# 3. Pure Minimalist Native Markdown README.md
+# 4. Japanese Minimalist README.md (English Only)
 # -----------------------------------------------------------------------------
 def generate_readme(has_contrib):
     md = []
 
-    # Pure Native Markdown Hero
-    md.append('# Flynn Maxwel &mdash; Vibecoder\n\n')
-    md.append(f'{TAGLINE}\n\n')
-    md.append('---\n\n')
+    # Zen Minimal Header
+    md.append('<div align="center">\n')
+    md.append('  <img src="./assets/zen-header.svg" width="600" alt="Flynn Maxwel — Vibecoder" />\n')
+    md.append('</div>\n\n')
 
-    # Frameless Centered Heatmap
+    # Centered Minimalist Philosophy / Location Statement
+    md.append('<div align="center">\n\n')
+    md.append(f'*{TAGLINE}*\n\n')
+    md.append('</div>\n\n')
+
+    md.append('<br/>\n\n')
+
+    # Frameless Activity Matrix
     if has_contrib:
         md.append('<div align="center">\n')
-        md.append('  <img src="./assets/contrib-heatmap.svg" alt="Flynn Maxwel Contributions" />\n')
+        md.append('  <img src="./assets/contrib-heatmap.svg" alt="Activity Flow" />\n')
         md.append('</div>\n\n')
-        md.append('---\n\n')
 
-    # Stack: Inline Devicons
-    md.append('### Stack\n\n')
-    devicons = [
-        '<img src="https://skillicons.dev/icons?i=python,js,ts,react,nextjs,nodejs,fastapi,postgres,docker,git,linux" alt="Tech Stack" />'
-    ]
-    md.append(f'{" ".join(devicons)}\n\n')
+    md.append('<br/>\n\n')
+
+    # Craft & Tools (Inline Monochromatic Icons)
+    md.append('### Craft &amp; Tools\n\n')
+    md.append('<img src="https://skillicons.dev/icons?i=python,js,ts,react,nextjs,nodejs,fastapi,postgres,docker,git,linux&theme=dark" alt="Craft & Tools" />\n\n')
+
     md.append('---\n\n')
 
-    # Selected Works: Minimal Link List
+    # Garden / Works
     md.append('### Works\n\n')
     for work in FEATURED_WORKS:
         name = work.get("name", "Project")
@@ -222,23 +281,22 @@ def generate_readme(has_contrib):
         md.append(f'- [**{name}**]({url}) &mdash; {desc}\n')
     md.append(f'- [**github.com/{USERNAME}**](https://github.com/{USERNAME}) &mdash; Open source repositories & experiments\n\n')
 
-    # Connect: Minimal Link List
+    md.append('---\n\n')
+
+    # Connect (Quiet, Minimalist)
     md.append('### Connect\n\n')
-    links = []
     for s in SOCIALS:
         label = s.get("label", "Link")
         url = s.get("url", "#")
-        links.append(f'- [{label}]({url})')
-    md.append('\n'.join(links))
-    md.append('\n')
+        md.append(f'- [{label}]({url})\n')
 
     with open("README.md", "w", encoding="utf-8") as f:
         f.writelines(md)
-    print("Generated Pure Minimalist README.md")
+    print("Generated Japanese Minimalist README.md")
 
 
 # -----------------------------------------------------------------------------
-# 4. Generate GitHub Action Workflow
+# 5. Generate GitHub Action Workflow
 # -----------------------------------------------------------------------------
 def generate_workflow():
     workflow_yaml = f'''name: Update Profile Art
@@ -287,9 +345,10 @@ jobs:
 # -----------------------------------------------------------------------------
 if __name__ == "__main__":
     print("="*60)
-    print("Rendering Pure Minimalist Profile...")
+    print("Rendering Japanese Minimalist Profile Suite...")
     print("="*60)
 
+    generate_zen_header()
     has_contrib = generate_contributions()
     generate_readme(has_contrib)
     generate_workflow()

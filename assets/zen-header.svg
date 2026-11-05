@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="840" height="150" viewBox="0 0 840 150" fill="none">
+  <defs>
+    <style>
+      .zen-name {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', serif;
+        font-size: 32px;
+        font-weight: 300;
+        letter-spacing: 12px;
+        fill: #f0f6fc;
+      }
+      .zen-title {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        font-size: 11px;
+        font-weight: 500;
+        letter-spacing: 6px;
+        text-transform: uppercase;
+        fill: #8b949e;
+      }
+      .zen-loc {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        font-size: 10px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        fill: #6e7681;
+      }
+    </style>
+  </defs>
+
+  <!-- Vermilion Red Sun Stamp / Zen Seal Accent (Hanko motif) -->
+  <circle cx="420.0" cy="38" r="8" fill="#bc002d" fill-opacity="0.9"/>
+  <circle cx="420.0" cy="38" r="14" stroke="#bc002d" stroke-width="0.75" stroke-opacity="0.35"/>
+
+  <!-- Centered Calm Typography -->
+  <text x="426.0" y="88" class="zen-name" text-anchor="middle">FLYNN MAXWEL</text>
+  <text x="423.0" y="112" class="zen-title" text-anchor="middle">Vibecoder</text>
+
+  <!-- Subtle Minimal Center Divider Line -->
+  <line x1="360.0" y1="130" x2="480.0" y2="130" stroke="#30363d" stroke-width="0.75"/>
+</svg>
