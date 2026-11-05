@@ -1,12 +1,11 @@
 """
-Generate a Dark Glassmorphism Personal Bento Grid GitHub Profile README.
-Layout Architecture:
-  - Asymmetric Bento Grid using clean GitHub-supported HTML tables & styled cards
-  - Card 1: Hero Identity (Avatar + Name + VIBECODER + Tirunelveli, Tamil Nadu coordinates)
-  - Card 2: Mission Telemetry & Live Frameless Heatmap
-  - Card 3: Stack & Architecture (Categorized high-contrast badges)
-  - Card 4: Selected Works & Deployments
-  - Card 5: Connect & Frequency Channels
+Generate an Apple-inspired Liquid Glass (Cupertino Midnight Frost) GitHub Profile Suite.
+Aesthetic:
+  - Cupertino Keynote typography: "Flynn Maxwel. Vibecoder." with polished subtitle
+  - Frosted liquid glass pill badges (location, status)
+  - Zero avatar photo inside the README
+  - Liquid Glass Contribution Pod SVG (smooth 20px squircle chassis, glass rim specular gradients, emerald gem tiles)
+  - Bento pods for Tech Stack (macOS icon dock), Selected Works & Connect
 """
 import os
 import json
@@ -28,13 +27,12 @@ with open(CONFIG_PATH, "r", encoding="utf-8") as f:
     config = json.load(f)
 
 USERNAME = config.get("github_username", "flynnmaxweld")
-BRAND_NAME = html.escape(config.get("brand_name", "FLYNN MAXWEL"))
-TITLE = html.escape(config.get("title", "VIBECODER"))
+BRAND_NAME = config.get("brand_name", "FLYNN MAXWEL")
+TITLE = config.get("title", "Vibecoder")
 TAGLINE = config.get("tagline", "Designing, building, and automating intelligent applications.")
-LOCATION = html.escape(config.get("location", "Tirunelveli, Tamil Nadu"))
-COORDINATES = html.escape(config.get("coordinates", "8.7139° N, 77.7567° E"))
-STATUS = html.escape(config.get("status", "BUILDING IN 2026"))
-SKILLS = config.get("skills", {})
+LOCATION = config.get("location", "Tirunelveli, Tamil Nadu")
+COORDINATES = config.get("coordinates", "8.7139° N, 77.7567° E")
+STATUS = config.get("status", "BUILDING IN 2026")
 FEATURED_WORKS = config.get("featured_works", [])
 SOCIALS = config.get("social_links", [])
 
@@ -94,9 +92,9 @@ def fetch_contributions_data():
 
 
 # -----------------------------------------------------------------------------
-# 2. Sleek Bento Heatmap SVG
+# 2. Apple Liquid Glass Contribution Pod SVG
 # -----------------------------------------------------------------------------
-def generate_contributions():
+def generate_liquid_glass_heatmap():
     raw_days = fetch_contributions_data()
     out_path = os.path.join("assets", "contrib-heatmap.svg")
     
@@ -127,15 +125,18 @@ def generate_contributions():
     if not contribs:
         contribs = raw_days
 
-    CELL, GAP, RAD, LEFT, TOP = 11, 3.5, 2.5, 26, 20
-    COLORS = ["#161b22", "#0e4429", "#006d32", "#26a641", "#39d353"]
-    GRAY = "#7d8590"
+    CELL, GAP, RAD, LEFT, TOP = 12, 3.5, 3.5, 42, 42
+    # Apple Midnight Gem Palette
+    COLORS = ["#1b212b", "#0f4028", "#176e3c", "#28a745", "#3de062"]
+    GRAY = "#86868b"
     MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
 
     n = len(contribs)
     NW = (n + 6) // 7
-    W = LEFT + NW * (CELL + GAP) + 10
-    H = TOP + 7 * (CELL + GAP) + 8
+    W = 860
+    H = 188
+
+    active_days = sum(1 for c in contribs if c["level"] > 0)
 
     labels = []
     rects = []
@@ -146,12 +147,12 @@ def generate_contributions():
         d = sd + datetime.timedelta(days=wk * 7)
         if d.month != last_m:
             last_m = d.month
-            labels.append(f'<text class="lbl" x="{LEFT+wk*(CELL+GAP)}" y="{TOP-6}">{MONTHS[d.month-1]}</text>')
+            labels.append(f'<text class="lbl" x="{LEFT+wk*(CELL+GAP)}" y="{TOP-12}">{MONTHS[d.month-1]}</text>')
 
     for name, r in [("Mon", 1), ("Wed", 3), ("Fri", 5)]:
-        labels.append(f'<text class="lbl" x="2" y="{TOP+r*(CELL+GAP)+CELL-3}">{name}</text>')
+        labels.append(f'<text class="lbl" x="12" y="{TOP+r*(CELL+GAP)+CELL-3}">{name}</text>')
 
-    REVEAL, DUR = 2.0, 0.4
+    REVEAL, DUR = 2.4, 0.45
     maxorder = (NW - 1) + 6 * 0.55
 
     for i, c in enumerate(contribs):
@@ -162,92 +163,132 @@ def generate_contributions():
         cls = "c g" if lvl >= 1 else "c e"
         rects.append(
             f'<rect class="{cls}" x="{x}" y="{y}" width="{CELL}" height="{CELL}" rx="{RAD}" '
-            f'fill="{COLORS[lvl]}" style="animation-delay:{delay}s"/>'
+            f'fill="{COLORS[lvl]}" stroke="#2d3440" stroke-width="0.5" style="animation-delay:{delay}s"/>'
         )
 
     svg = f'''<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}" fill="none">
   <defs>
+    <!-- Liquid Glass Surface Gradient -->
+    <linearGradient id="glass-body" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#161b22" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#0d1117" stop-opacity="0.95"/>
+    </linearGradient>
+
+    <!-- Specular Frosted Glass Rim -->
+    <linearGradient id="glass-rim" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8b949e" stop-opacity="0.45"/>
+      <stop offset="40%" stop-color="#30363d" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#161b22" stop-opacity="0.1"/>
+    </linearGradient>
+
+    <!-- Top Gloss Sheen -->
+    <linearGradient id="top-sheen" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#ffffff" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+
     <style>
-      text.lbl {{ fill:{GRAY}; font-size:9.5px; font-weight:500; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', monospace; }}
+      text.lbl {{ fill:{GRAY}; font-size:10px; font-weight:500; font-family:-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', sans-serif; }}
+      text.pod-title {{ fill:#f5f5f7; font-size:11px; font-weight:600; font-family:-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif; letter-spacing:0.5px; }}
+      text.pod-sub {{ fill:#86868b; font-size:10px; font-weight:500; font-family:-apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif; }}
       .c {{ transform-box:fill-box; transform-origin:center; opacity:0; animation:pop {DUR}s ease-out both; }}
       .g {{ animation:pop {DUR}s ease-out both, flash {DUR+0.15}s ease-out both; }}
       @keyframes pop {{ 0%{{opacity:0;transform:scale(.2)}} 60%{{opacity:1;transform:scale(1.05)}} 100%{{opacity:1;transform:scale(1)}} }}
-      @keyframes flash {{ 0%{{filter:brightness(2)}} 50%{{filter:brightness(2)}} 100%{{filter:brightness(1)}} }}
+      @keyframes flash {{ 0%{{filter:brightness(2.2)}} 50%{{filter:brightness(2.2)}} 100%{{filter:brightness(1)}} }}
       @media (prefers-reduced-motion: reduce) {{ .c {{ opacity:1 !important; animation:none !important; }} }}
     </style>
   </defs>
 
+  <!-- Cupertino Liquid Glass Chassis (20px squircle) -->
+  <rect x="0.5" y="0.5" width="{W-1}" height="{H-1}" rx="20" fill="url(#glass-body)" stroke="url(#glass-rim)" stroke-width="1"/>
+  
+  <!-- Subtle Top Specular Glass Sheen Highlight -->
+  <rect x="20" y="1" width="{W-40}" height="1" fill="url(#top-sheen)"/>
+
+  <!-- Top Glass Header -->
+  <text x="24" y="24" class="pod-title">Telemetry &amp; Contributions</text>
+  <text x="{W-24}" y="24" class="pod-sub" text-anchor="end"><tspan fill="#34c759">&#x25CF;</tspan> {active_days} Active Days in 2026</text>
+
+  <!-- Activity Grid -->
   {"".join(labels)}
   {"".join(rects)}
+
+  <!-- Legend -->
+  <g transform="translate({W-140}, {H-18})">
+    <text class="lbl" x="-28" y="9">Less</text>
+    <rect x="0" y="0" width="10" height="10" rx="2.5" fill="{COLORS[0]}" stroke="#2d3440" stroke-width="0.5"/>
+    <rect x="14" y="0" width="10" height="10" rx="2.5" fill="{COLORS[1]}"/>
+    <rect x="28" y="0" width="10" height="10" rx="2.5" fill="{COLORS[2]}"/>
+    <rect x="42" y="0" width="10" height="10" rx="2.5" fill="{COLORS[3]}"/>
+    <rect x="56" y="0" width="10" height="10" rx="2.5" fill="{COLORS[4]}"/>
+    <text class="lbl" x="72" y="9">More</text>
+  </g>
 </svg>'''
 
     ET.fromstring(svg)
 
     with open(out_path, "w", encoding="utf-8") as f:
         f.write(svg)
-    print(f"Generated Bento Heatmap: {out_path}")
+    print(f"Generated Liquid Glass Contribution Pod: {out_path}")
     return True
 
 
 # -----------------------------------------------------------------------------
-# 3. Generate Personal Bento Grid README.md
+# 3. Generate Apple Liquid Glass README.md
 # -----------------------------------------------------------------------------
-def generate_bento_readme():
+def generate_apple_readme():
     md = []
 
-    # ==================== CARD 1: HERO IDENTITY BENTO ====================
-    md.append('<table>\n')
-    md.append('  <tr>\n')
-    md.append('    <td width="130" align="center" valign="middle">\n')
-    md.append('      <img src="./avatar.png" width="105" style="border-radius:50%;" alt="Flynn Maxwel" />\n')
-    md.append('    </td>\n')
-    md.append('    <td valign="middle">\n')
-    md.append('      <h2>Flynn Maxwel &mdash; <code>VIBECODER</code></h2>\n')
-    md.append(f'      <p><b>{TAGLINE}</b></p>\n')
-    md.append(f'      <p><code>📍 {LOCATION}</code> &nbsp;&middot;&nbsp; <code>🛰️ {COORDINATES}</code> &nbsp;&middot;&nbsp; <code>⚡ {STATUS}</code></p>\n')
-    md.append('    </td>\n')
-    md.append('  </tr>\n')
-    md.append('</table>\n\n')
-
-    # ==================== CARD 2: LIVE TELEMETRY & ACTIVITY ====================
-    md.append('### 📡 Activity &amp; Live Telemetry\n\n')
-    md.append('<div align="center">\n')
-    md.append('  <img src="./assets/contrib-heatmap.svg" alt="Live Contributions Flow" />\n')
+    # ==================== APPLE KEYNOTE HEADLINE (NO AVATAR) ====================
+    md.append('<div align="center">\n\n')
+    md.append('# Flynn Maxwel. Vibecoder.\n\n')
+    md.append(f'### *"{TAGLINE}"*\n\n')
+    md.append(f'`📍 {LOCATION}` &nbsp;&bull;&nbsp; `⚡ {STATUS}` &nbsp;&bull;&nbsp; `🛰️ {COORDINATES}`\n\n')
     md.append('</div>\n\n')
 
-    # ==================== 2-COLUMN ASYMMETRIC BENTO GRID (Cards 3, 4, 5) ====================
+    md.append('<br/>\n\n')
+
+    # ==================== LIQUID GLASS HEATMAP POD ====================
+    md.append('<div align="center">\n')
+    md.append('  <img src="./assets/contrib-heatmap.svg" width="860" alt="Contribution Pod" />\n')
+    md.append('</div>\n\n')
+
+    md.append('<br/>\n\n')
+
+    # ==================== APPLE BENTO PODS ====================
     md.append('<table>\n')
     md.append('  <tr>\n')
-    
-    # Left Column: Tech Stack & Architecture (Card 3)
+
+    # Left Pod: macOS Developer Dock & Architecture
     md.append('    <td width="50%" valign="top">\n')
-    md.append('      <h3>🛠️ Systems &amp; Stack</h3>\n')
+    md.append('      <h3>🛠️ Architecture &amp; Stack</h3>\n')
     md.append('      <p>\n')
     md.append('        <a href="https://skillicons.dev">\n')
-    md.append('          <img src="https://skillicons.dev/icons?i=python,js,ts,react,nextjs,nodejs,fastapi,postgres,docker,git,linux&perline=6" alt="Tech Stack" />\n')
+    md.append('          <img src="https://skillicons.dev/icons?i=python,js,ts,react,nextjs,nodejs,fastapi,postgres,docker,git,linux&perline=6" alt="Developer Stack" />\n')
     md.append('        </a>\n')
     md.append('      </p>\n')
     md.append('      <ul>\n')
-    md.append('        <li><b>Languages:</b> Python, JavaScript, TypeScript, SQL</li>\n')
-    md.append('        <li><b>Web &amp; APIs:</b> React, Next.js, Node.js, FastAPI</li>\n')
-    md.append('        <li><b>Systems:</b> Docker, PostgreSQL, Linux, Git</li>\n')
-    md.append('        <li><b>AI &amp; Workflows:</b> Autonomous Agents, LLM Pipelines</li>\n')
+    md.append('        <li><b>Languages:</b> Python, TypeScript, JavaScript, SQL</li>\n')
+    md.append('        <li><b>Web &amp; Core:</b> React, Next.js, Node.js, FastAPI</li>\n')
+    md.append('        <li><b>Platforms:</b> Docker, PostgreSQL, Linux, Git</li>\n')
+    md.append('        <li><b>Intelligence:</b> Autonomous Agents, LLM Pipelines</li>\n')
     md.append('      </ul>\n')
     md.append('    </td>\n')
 
-    # Right Column: Projects & Connect (Cards 4 & 5)
+    # Right Pod: Selected Works & Connect
     md.append('    <td width="50%" valign="top">\n')
-    md.append('      <h3>📂 Selected Deployments</h3>\n')
+    md.append('      <h3>📂 Featured Works</h3>\n')
     md.append('      <ul>\n')
     for work in FEATURED_WORKS:
         name = work.get("name", "Project")
         url = work.get("url", "#")
         desc = work.get("desc", "")
         md.append(f'        <li><a href="{url}"><b><code>{name}</code></b></a><br/>{desc}</li>\n')
-    md.append(f'        <li><a href="https://github.com/{USERNAME}"><b><code>github.com/{USERNAME}</code></b></a><br/>Open-source repositories &amp; experiments</li>\n')
+    md.append(f'        <li><a href="https://github.com/{USERNAME}"><b><code>github.com/{USERNAME}</code></b></a><br/>Open-source projects &amp; experiments</li>\n')
     md.append('      </ul>\n')
     md.append('      <hr/>\n')
-    md.append('      <h3>🛰️ Connect</h3>\n')
+    md.append('      <h3>🔗 Connect</h3>\n')
     md.append('      <p>\n')
     connects = []
     for s in SOCIALS:
@@ -263,7 +304,7 @@ def generate_bento_readme():
 
     with open("README.md", "w", encoding="utf-8") as f:
         f.writelines(md)
-    print("Generated Bento Grid README.md")
+    print("Generated Apple Liquid Glass README.md")
 
 
 # -----------------------------------------------------------------------------
@@ -316,11 +357,11 @@ jobs:
 # -----------------------------------------------------------------------------
 if __name__ == "__main__":
     print("="*60)
-    print("Rendering Personal Bento Grid Profile Suite...")
+    print("Rendering Apple Liquid Glass Profile Suite...")
     print("="*60)
 
-    generate_contributions()
-    generate_bento_readme()
+    generate_liquid_glass_heatmap()
+    generate_apple_readme()
     generate_workflow()
 
     print("="*60)
