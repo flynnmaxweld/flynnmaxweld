@@ -1,10 +1,11 @@
 """
-Generate a minimalist Swiss-style GitHub profile README & dynamic SVGs.
-Includes:
-  1. Dynamic Swiss Editorial Header Banner SVG (`assets/header.svg`)
-  2. Dynamic Contribution Heatmap SVG (`assets/contrib-heatmap.svg`) with zero external dependency fallback
-  3. High-contrast Swiss-style README.md layout
-  4. GitHub Actions workflow to auto-refresh daily
+Generate a Cinematic Christopher Nolan-inspired GitHub profile README & dynamic SVGs.
+Features:
+  - Deep space/monolith aesthetic (Interstellar / Oppenheimer / Tenet / Inception vibe)
+  - Wide letter-spaced cinematic typography, warm tungsten/amber and icy titanium accents
+  - Title: "VIBECODER"
+  - Removed "Swiss Editorial" tag and timeline date ranges
+  - Heatmap formatted as a clean Mission Telemetry Matrix
 """
 import os
 import json
@@ -29,91 +30,124 @@ with open(CONFIG_PATH, "r", encoding="utf-8") as f:
 
 USERNAME = config.get("github_username", "flynnmaxweld")
 BRAND_NAME = html.escape(config.get("brand_name", "FLYNN MAXWEL"))
-TITLE = html.escape(config.get("title", "Vibecoder · Fullstack & AI Systems Architect"))
+TITLE = html.escape(config.get("title", "VIBECODER"))
 TAGLINE = config.get("tagline", "Designing, building, and automating intelligent applications from New Delhi, India.")
 COORDINATES = html.escape(config.get("coordinates", "28.6139° N, 77.2090° E"))
 LOCATION = html.escape(config.get("location", "New Delhi, IN"))
-STATUS = html.escape(config.get("status", "BUILDING IN 2026"))
+STATUS = html.escape(config.get("status", "ACTIVE // 2026"))
 SKILLS = config.get("skills", {})
 FEATURED_WORKS = config.get("featured_works", [])
 SOCIALS = config.get("social_links", [])
 
 # -----------------------------------------------------------------------------
-# 1. Generate Editorial Swiss Header Banner SVG
+# 1. Generate Cinematic Nolan Header Banner SVG
 # -----------------------------------------------------------------------------
 def generate_header():
     W, H = 860, 220
     
     svg = f'''<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}" fill="none">
   <defs>
-    <linearGradient id="text-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+    <!-- Deep Cinematic Vignette / Radial Glow -->
+    <radialGradient id="vignette" cx="50%" cy="50%" r="75%">
+      <stop offset="0%" stop-color="#12161f" stop-opacity="0.8"/>
+      <stop offset="60%" stop-color="#090c10" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#05070a" stop-opacity="1"/>
+    </radialGradient>
+    
+    <!-- Nolan Titanium Metallic Title Gradient -->
+    <linearGradient id="metallic-title" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#ffffff"/>
-      <stop offset="70%" stop-color="#f0f6fc"/>
-      <stop offset="100%" stop-color="#8b949e"/>
+      <stop offset="40%" stop-color="#e6edf3"/>
+      <stop offset="75%" stop-color="#9ea7b3"/>
+      <stop offset="100%" stop-color="#545d68"/>
     </linearGradient>
+
+    <!-- Warm Amber / Tungsten Accent Gradient -->
+    <linearGradient id="amber-beam" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#e3b341" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#f0883e" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#e3b341" stop-opacity="0"/>
+    </linearGradient>
+
     <style>
-      .title {{
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-        font-size: 46px;
+      .cinematic-brand {{
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+        font-size: 38px;
         font-weight: 800;
-        letter-spacing: -1.5px;
-        fill: url(#text-grad);
+        letter-spacing: 14px;
+        fill: url(#metallic-title);
       }}
-      .mono-meta {{
+      .cinematic-sub {{
         font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
-        font-size: 11px;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 9px;
+        fill: #f0883e;
+      }}
+      .telemetry-label {{
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        font-size: 9.5px;
+        font-weight: 600;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        fill: #6e7681;
+      }}
+      .telemetry-val {{
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        font-size: 10px;
         font-weight: 600;
         letter-spacing: 1.5px;
-        text-transform: uppercase;
-      }}
-      .sub {{
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-        font-size: 15px;
-        font-weight: 500;
-        fill: #8b949e;
-        letter-spacing: -0.2px;
+        fill: #c9d1d9;
       }}
     </style>
   </defs>
 
-  <!-- Card Background with 1px Swiss Editorial Border -->
-  <rect x="0.5" y="0.5" width="{W-1}" height="{H-1}" rx="8" fill="#0d1117" stroke="#30363d" stroke-width="1"/>
-  
-  <!-- Subtle Architectural Grid Accent Lines -->
-  <line x1="36" y1="48" x2="{W-36}" y2="48" stroke="#21262d" stroke-width="1"/>
-  <line x1="36" y1="{H-44}" x2="{W-36}" y2="{H-44}" stroke="#21262d" stroke-width="1"/>
-  <line x1="600" y1="48" x2="600" y2="{H-44}" stroke="#21262d" stroke-width="1" stroke-dasharray="3 3"/>
+  <!-- Deep Slate Outer Chassis with 1px border -->
+  <rect x="0.5" y="0.5" width="{W-1}" height="{H-1}" rx="4" fill="url(#vignette)" stroke="#21262d" stroke-width="1"/>
+
+  <!-- Ultra-thin Anamorphic Horizontal Light Blade -->
+  <line x1="40" y1="42" x2="{W-40}" y2="42" stroke="#161b22" stroke-width="1"/>
+  <rect x="180" y="41.5" width="500" height="1" fill="url(#amber-beam)"/>
+  <line x1="40" y1="{H-40}" x2="{W-40}" y2="{H-40}" stroke="#161b22" stroke-width="1"/>
+
+  <!-- Left/Right Film Aperture Crop Marks -->
+  <line x1="28" y1="36" x2="28" y2="48" stroke="#30363d" stroke-width="1"/>
+  <line x1="28" y1="36" x2="40" y2="36" stroke="#30363d" stroke-width="1"/>
+  <line x1="{W-28}" y1="36" x2="{W-28}" y2="48" stroke="#30363d" stroke-width="1"/>
+  <line x1="{W-28}" y1="36" x2="{W-40}" y2="36" stroke="#30363d" stroke-width="1"/>
+
+  <line x1="28" y1="{H-36}" x2="28" y2="{H-48}" stroke="#30363d" stroke-width="1"/>
+  <line x1="28" y1="{H-36}" x2="40" y2="{H-36}" stroke="#30363d" stroke-width="1"/>
+  <line x1="{W-28}" y1="{H-36}" x2="{W-28}" y2="{H-48}" stroke="#30363d" stroke-width="1"/>
+  <line x1="{W-28}" y1="{H-36}" x2="{W-40}" y2="{H-36}" stroke="#30363d" stroke-width="1"/>
 
   <!-- Top Metadata Bar -->
-  <text x="36" y="32" class="mono-meta" fill="#8b949e">INDEX // 001</text>
-  <text x="140" y="32" class="mono-meta" fill="#3fb950">&#x25CF; {STATUS}</text>
-  <text x="{W-36}" y="32" class="mono-meta" fill="#8b949e" text-anchor="end">{COORDINATES} &#183; {LOCATION}</text>
+  <text x="44" y="28" class="telemetry-label">SEQUENCE // 001</text>
+  <text x="{W/2}" y="28" class="telemetry-val" text-anchor="middle">&#x25CF; {STATUS}</text>
+  <text x="{W-44}" y="28" class="telemetry-label" text-anchor="end">{COORDINATES} &#183; {LOCATION}</text>
 
-  <!-- Big Hero Wordmark -->
-  <text x="36" y="112" class="title">{BRAND_NAME}</text>
+  <!-- Center Nolan Title Block -->
+  <!-- Wide-tracked Hero Name -->
+  <text x="{W/2}" y="106" class="cinematic-brand" text-anchor="middle">{BRAND_NAME}</text>
   
-  <!-- Subtitle -->
-  <text x="38" y="146" class="sub">{TITLE}</text>
+  <!-- Single Focus Title: VIBECODER in Amber -->
+  <text x="{W/2}" y="142" class="cinematic-sub" text-anchor="middle">{TITLE}</text>
 
-  <!-- Right Telemetry Panel -->
-  <text x="620" y="80" class="mono-meta" fill="#8b949e">ARCHITECTURE</text>
-  <text x="620" y="102" class="mono-meta" fill="#f0f6fc">AUTONOMOUS &amp; DISTRIBUTED</text>
-  
-  <text x="620" y="132" class="mono-meta" fill="#8b949e">FOCUS</text>
-  <text x="620" y="152" class="mono-meta" fill="#388bfd">AI AGENTS &amp; FULL-STACK</text>
+  <!-- Subtle Thin Reticle Center Tick -->
+  <circle cx="{W/2}" cy="162" r="2" fill="#30363d"/>
 
-  <!-- Bottom Navigation / Metadata Footer -->
-  <text x="36" y="{H-20}" class="mono-meta" fill="#484f58">SYSTEM: ONLINE</text>
-  <text x="{W-36}" y="{H-20}" class="mono-meta" fill="#8b949e" text-anchor="end">SWISS EDITORIAL V2.0 // @{USERNAME}</text>
+  <!-- Bottom Navigation / Frequency Footer -->
+  <text x="44" y="{H-18}" class="telemetry-label">TRANSMISSION: ACTIVE</text>
+  <text x="{W/2}" y="{H-18}" class="telemetry-label" text-anchor="middle">70MM // PERSPECTIVE</text>
+  <text x="{W-44}" y="{H-18}" class="telemetry-label" text-anchor="end">AUTONOMOUS SYSTEMS // @{USERNAME}</text>
 </svg>'''
 
-    # Strict XML validation
     ET.fromstring(svg)
 
     out_path = os.path.join("assets", "header.svg")
     with open(out_path, "w", encoding="utf-8") as f:
         f.write(svg)
-    print(f"Generated & Validated Editorial Header Banner: {out_path}")
+    print(f"Generated Cinematic Nolan Header: {out_path}")
 
 
 # -----------------------------------------------------------------------------
@@ -171,7 +205,7 @@ def fetch_contributions_data():
 
 
 # -----------------------------------------------------------------------------
-# 3. Dynamic Contribution Heatmap SVG Generator
+# 3. Dynamic Contribution Heatmap SVG (Nolan Monolith & Space Palette)
 # -----------------------------------------------------------------------------
 def generate_contributions():
     raw_days = fetch_contributions_data()
@@ -204,15 +238,16 @@ def generate_contributions():
     if not contribs:
         contribs = raw_days
 
-    CELL, GAP, RAD, LEFT, TOP = 13, 3.5, 3, 38, 48
-    COLORS = ["#161b22", "#0e4429", "#006d32", "#26a641", "#39d353"]
-    GRAY = "#7d8590"
+    CELL, GAP, RAD, LEFT, TOP = 13, 3.5, 2, 42, 44
+    # Nolan Palette: Void obsidian, deep titanium, muted emerald, amber highlight, bright solar
+    COLORS = ["#13171f", "#0e3a24", "#1b5e39", "#2ea043", "#56d364"]
+    GRAY = "#6e7681"
     MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
 
     n = len(contribs)
     NW = (n + 6) // 7
     W = 860
-    H = 195
+    H = 188
 
     active_days = sum(1 for c in contribs if c["level"] > 0)
 
@@ -228,9 +263,9 @@ def generate_contributions():
             labels.append(f'<text class="lbl" x="{LEFT+wk*(CELL+GAP)}" y="{TOP-12}">{MONTHS[d.month-1]}</text>')
 
     for name, r in [("Mon", 1), ("Wed", 3), ("Fri", 5)]:
-        labels.append(f'<text class="lbl" x="6" y="{TOP+r*(CELL+GAP)+CELL-3}">{name}</text>')
+        labels.append(f'<text class="lbl" x="8" y="{TOP+r*(CELL+GAP)+CELL-3}">{name}</text>')
 
-    REVEAL, DUR = 2.8, 0.45
+    REVEAL, DUR = 2.5, 0.45
     maxorder = (NW - 1) + 6 * 0.55
 
     for i, c in enumerate(contribs):
@@ -241,72 +276,76 @@ def generate_contributions():
         cls = "c g" if lvl >= 1 else "c e"
         rects.append(
             f'<rect class="{cls}" x="{x}" y="{y}" width="{CELL}" height="{CELL}" rx="{RAD}" '
-            f'fill="{COLORS[lvl]}" stroke="#30363d" stroke-width="0.5" style="animation-delay:{delay}s"/>'
+            f'fill="{COLORS[lvl]}" stroke="#21262d" stroke-width="0.5" style="animation-delay:{delay}s"/>'
         )
-
-    start_date = contribs[0]["date"]
-    end_date = contribs[-1]["date"]
 
     svg = f'''<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}" fill="none">
   <defs>
+    <radialGradient id="matrix-grad" cx="50%" cy="50%" r="75%">
+      <stop offset="0%" stop-color="#10141d" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#070a0e" stop-opacity="1"/>
+    </radialGradient>
     <style>
-      text.lbl {{ fill:{GRAY}; font-size:11px; font-weight:500; font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }}
-      text.meta {{ fill:#8b949e; font-size:11px; font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; letter-spacing:1px; }}
-      text.strong {{ fill:#f0f6fc; font-weight:600; }}
+      text.lbl {{ fill:{GRAY}; font-size:10px; font-weight:600; font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; letter-spacing:1px; }}
+      text.telemetry {{ fill:#6e7681; font-size:9.5px; font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; letter-spacing:2px; text-transform:uppercase; }}
+      text.strong {{ fill:#e6edf3; font-weight:700; }}
       .c {{ transform-box:fill-box; transform-origin:center; opacity:0; animation:pop {DUR}s ease-out both; }}
       .g {{ animation:pop {DUR}s ease-out both, flash {DUR+0.15}s ease-out both; }}
-      @keyframes pop {{ 0%{{opacity:0;transform:scale(.2)}} 60%{{opacity:1;transform:scale(1.08)}} 100%{{opacity:1;transform:scale(1)}} }}
+      @keyframes pop {{ 0%{{opacity:0;transform:scale(.2)}} 60%{{opacity:1;transform:scale(1.05)}} 100%{{opacity:1;transform:scale(1)}} }}
       @keyframes flash {{ 0%{{filter:brightness(2.2)}} 50%{{filter:brightness(2.2)}} 100%{{filter:brightness(1)}} }}
       @media (prefers-reduced-motion: reduce) {{ .c {{ opacity:1 !important; animation:none !important; }} }}
     </style>
   </defs>
 
-  <rect x="0.5" y="0.5" width="{W-1}" height="{H-1}" rx="8" fill="#0d1117" stroke="#30363d" stroke-width="1"/>
+  <rect x="0.5" y="0.5" width="{W-1}" height="{H-1}" rx="4" fill="url(#matrix-grad)" stroke="#21262d" stroke-width="1"/>
 
-  <text x="24" y="24" class="meta">ACTIVITY STREAM // LIVE CONTRIBUTION TELEMETRY</text>
-  <text x="{W-24}" y="24" class="meta" text-anchor="end"><tspan fill="#39d353">&#x25CF;</tspan> ACTIVE DAYS: <tspan class="strong">{active_days}</tspan></text>
+  <!-- Telemetry Bar -->
+  <text x="28" y="24" class="telemetry">ORBITAL ACTIVITY // SYSTEM TELEMETRY</text>
+  <text x="{W-28}" y="24" class="telemetry" text-anchor="end"><tspan fill="#3fb950">&#x25CF;</tspan> ACTIVE CYCLES: <tspan class="strong">{active_days}</tspan></text>
 
+  <!-- Labels & Heatmap Grid -->
   {"".join(labels)}
   {"".join(rects)}
 
-  <g transform="translate({W-160}, {H-18})">
-    <text class="lbl" x="-32" y="9">Less</text>
-    <rect x="0" y="0" width="10" height="10" rx="2" fill="{COLORS[0]}" stroke="#30363d" stroke-width="0.5"/>
-    <rect x="14" y="0" width="10" height="10" rx="2" fill="{COLORS[1]}"/>
-    <rect x="28" y="0" width="10" height="10" rx="2" fill="{COLORS[2]}"/>
-    <rect x="42" y="0" width="10" height="10" rx="2" fill="{COLORS[3]}"/>
-    <rect x="56" y="0" width="10" height="10" rx="2" fill="{COLORS[4]}"/>
-    <text class="lbl" x="72" y="9">More</text>
+  <!-- Legend & Bottom Details (Timeline removed) -->
+  <text x="28" y="{H-14}" class="telemetry">STATUS: RUNNING CONTINUOUSLY</text>
+
+  <g transform="translate({W-160}, {H-21})">
+    <text class="lbl" x="-32" y="8">LOW</text>
+    <rect x="0" y="0" width="9" height="9" rx="1.5" fill="{COLORS[0]}" stroke="#21262d" stroke-width="0.5"/>
+    <rect x="13" y="0" width="9" height="9" rx="1.5" fill="{COLORS[1]}"/>
+    <rect x="26" y="0" width="9" height="9" rx="1.5" fill="{COLORS[2]}"/>
+    <rect x="39" y="0" width="9" height="9" rx="1.5" fill="{COLORS[3]}"/>
+    <rect x="52" y="0" width="9" height="9" rx="1.5" fill="{COLORS[4]}"/>
+    <text class="lbl" x="68" y="8">PEAK</text>
   </g>
-  <text x="24" y="{H-10}" class="meta">TIMELINE: <tspan class="strong">{start_date} &#8594; {end_date}</tspan></text>
 </svg>'''
 
-    # Strict XML validation
     ET.fromstring(svg)
 
     with open(out_path, "w", encoding="utf-8") as f:
         f.write(svg)
-    print(f"Generated & Validated Contributions Heatmap: {out_path}")
+    print(f"Generated Cinematic Contributions Matrix: {out_path}")
     return True
 
 
 # -----------------------------------------------------------------------------
-# 4. Generate Swiss Editorial README.md
+# 4. Generate Cinematic Nolan README.md
 # -----------------------------------------------------------------------------
 def generate_readme(has_contrib):
     md = []
 
-    # Dynamic Editorial Hero Banner
+    # Dynamic Cinematic Hero Banner
     md.append('<div align="center">\n')
     md.append('  <a href="https://flynnmaxweld.github.io">\n')
-    md.append('    <img src="./assets/header.svg" width="860" alt="Flynn Maxwel — Vibecoder &amp; AI Systems Architect" />\n')
+    md.append('    <img src="./assets/header.svg" width="860" alt="Flynn Maxwel — Vibecoder" />\n')
     md.append('  </a>\n')
     md.append('</div>\n\n')
 
-    # Editorial Statement Box
+    # Cinematic Statement
     md.append(f'> **"{TAGLINE}"**\n\n')
 
-    # Dynamic Heatmap Graph
+    # Dynamic Heatmap Matrix
     if has_contrib:
         md.append('<div align="center">\n')
         md.append('  <img src="./assets/contrib-heatmap.svg" width="860" alt="Flynn Maxwel Contribution Telemetry" />\n')
@@ -314,7 +353,7 @@ def generate_readme(has_contrib):
 
     md.append('---\n\n')
 
-    # Tech Stack & Systems Matrix
+    # Tech Stack & Systems Architecture Matrix
     md.append('### ⚙️ Systems &amp; Stack Architecture\n\n')
     md.append('| Domain | Stack &amp; Technologies |\n')
     md.append('| :--- | :--- |\n')
@@ -426,7 +465,7 @@ jobs:
 # -----------------------------------------------------------------------------
 if __name__ == "__main__":
     print("="*60)
-    print("Rendering Swiss Editorial GitHub Profile Suite...")
+    print("Rendering Cinematic Nolan Style Profile Suite...")
     print("="*60)
 
     generate_header()

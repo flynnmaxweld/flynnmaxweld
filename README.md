@@ -1,6 +1,6 @@
 <div align="center">
   <a href="https://flynnmaxweld.github.io">
-    <img src="./assets/header.svg" width="860" alt="Flynn Maxwel — Vibecoder &amp; AI Systems Architect" />
+    <img src="./assets/header.svg" width="860" alt="Flynn Maxwel — Vibecoder" />
   </a>
 </div>
 
