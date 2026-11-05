@@ -1,11 +1,11 @@
 """
-Generate a Japanese Minimalist (Wabi-Sabi / Ma / Zen) GitHub profile README & dynamic SVGs.
-Aesthetic:
-  - English only (no Japanese characters)
-  - Japanese Zen design principles: Ma (negative space), Kanso (simplicity), Shizen (natural balance)
-  - Vermilion / Crimson sun seal accent (#bc002d / #d33833), sumi ink charcoal (#12151a), washi paper tones (#f6f8fa / #8b949e)
-  - Frameless, peaceful organic contribution dots (moss/jade hues #1b382b -> #2d8a56 -> #4ade80)
-  - Elegant vertical balance and serene typography
+Generate a Sleek Premium Japanese Design GitHub Profile README & SVGs.
+Aesthetic & Principles:
+  - Inspired by Tokyo luxury minimalism (MUJI Luxury / Kenya Hara / Lexus Monolith / Sony Master Series)
+  - Monochrome palette: Sumi ink obsidian (#0b0e14 / #0f141c), matte platinum (#e6edf3), brushed titanium (#8b949e)
+  - Zero red accents, zero Japanese characters (100% English)
+  - Geometric symmetry, subtle 1px hairline craftsmanship, elegant letter-tracking
+  - Frameless pristine contribution matrix in sumi & jade/emerald tones
 """
 import os
 import json
@@ -28,7 +28,7 @@ with open(CONFIG_PATH, "r", encoding="utf-8") as f:
 
 USERNAME = config.get("github_username", "flynnmaxweld")
 BRAND_NAME = html.escape(config.get("brand_name", "FLYNN MAXWEL"))
-TITLE = html.escape(config.get("title", "Vibecoder"))
+TITLE = html.escape(config.get("title", "VIBECODER"))
 TAGLINE = config.get("tagline", "Designing, building, and automating intelligent applications from Tirunelveli, Tamil Nadu.")
 LOCATION = html.escape(config.get("location", "Tirunelveli, Tamil Nadu"))
 FEATURED_WORKS = config.get("featured_works", [])
@@ -90,49 +90,70 @@ def fetch_contributions_data():
 
 
 # -----------------------------------------------------------------------------
-# 2. Japanese Minimalist Header SVG (Vermilion Enso / Red Sun Seal Accent)
+# 2. Sleek Premium Japanese Header SVG (Kenya Hara / Tokyo Minimalist Monolith)
 # -----------------------------------------------------------------------------
 def generate_zen_header():
-    W, H = 840, 150
+    W, H = 860, 160
 
     svg = f'''<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}" fill="none">
   <defs>
+    <!-- Brushed Platinum Monolith Gradient -->
+    <linearGradient id="plat-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="60%" stop-color="#e6edf3"/>
+      <stop offset="100%" stop-color="#a8b1bd"/>
+    </linearGradient>
+
+    <!-- Subtle Sumi Shading -->
+    <linearGradient id="sumi-edge" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#30363d" stop-opacity="0"/>
+      <stop offset="25%" stop-color="#484f58" stop-opacity="0.8"/>
+      <stop offset="50%" stop-color="#8b949e" stop-opacity="1"/>
+      <stop offset="75%" stop-color="#484f58" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#30363d" stop-opacity="0"/>
+    </linearGradient>
+
     <style>
-      .zen-name {{
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', serif;
-        font-size: 32px;
-        font-weight: 300;
-        letter-spacing: 12px;
-        fill: #f0f6fc;
+      .hero-kanji-balance {{
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+        font-size: 34px;
+        font-weight: 700;
+        letter-spacing: 16px;
+        fill: url(#plat-grad);
       }}
-      .zen-title {{
+      .sub-title {{
         font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
         font-size: 11px;
-        font-weight: 500;
-        letter-spacing: 6px;
+        font-weight: 600;
+        letter-spacing: 10px;
         text-transform: uppercase;
         fill: #8b949e;
       }}
-      .zen-loc {{
+      .meta-tag {{
         font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-        font-size: 10px;
+        font-size: 9px;
+        font-weight: 500;
         letter-spacing: 3px;
         text-transform: uppercase;
-        fill: #6e7681;
+        fill: #545d68;
       }}
     </style>
   </defs>
 
-  <!-- Vermilion Red Sun Stamp / Zen Seal Accent (Hanko motif) -->
-  <circle cx="{W/2}" cy="38" r="8" fill="#bc002d" fill-opacity="0.9"/>
-  <circle cx="{W/2}" cy="38" r="14" stroke="#bc002d" stroke-width="0.75" stroke-opacity="0.35"/>
+  <!-- Top Micro Hairline -->
+  <line x1="80" y1="28" x2="{W-80}" y2="28" stroke="url(#sumi-edge)" stroke-width="0.75"/>
 
-  <!-- Centered Calm Typography -->
-  <text x="{W/2 + 6}" y="88" class="zen-name" text-anchor="middle">{BRAND_NAME}</text>
-  <text x="{W/2 + 3}" y="112" class="zen-title" text-anchor="middle">{TITLE}</text>
+  <!-- Top Metadata Markers (Balanced Negative Space) -->
+  <text x="80" y="20" class="meta-tag">CRAFT // 001</text>
+  <text x="{W/2}" y="20" class="meta-tag" text-anchor="middle">PRECISION SYSTEMS</text>
+  <text x="{W-80}" y="20" class="meta-tag" text-anchor="end">TIRUNELVELI &#183; TN</text>
 
-  <!-- Subtle Minimal Center Divider Line -->
-  <line x1="{W/2 - 60}" y1="130" x2="{W/2 + 60}" y2="130" stroke="#30363d" stroke-width="0.75"/>
+  <!-- Hero Typography: Expansive, Calm, Symmetrical -->
+  <text x="{W/2 + 8}" y="82" class="hero-kanji-balance" text-anchor="middle">{BRAND_NAME}</text>
+  <text x="{W/2 + 5}" y="112" class="sub-title" text-anchor="middle">{TITLE}</text>
+
+  <!-- Bottom Micro Hairline -->
+  <line x1="160" y1="134" x2="{W-160}" y2="134" stroke="url(#sumi-edge)" stroke-width="0.75"/>
 </svg>'''
 
     ET.fromstring(svg)
@@ -140,11 +161,11 @@ def generate_zen_header():
     out_path = os.path.join("assets", "zen-header.svg")
     with open(out_path, "w", encoding="utf-8") as f:
         f.write(svg)
-    print(f"Generated Japanese Zen Header: {out_path}")
+    print(f"Generated Sleek Japanese Header: {out_path}")
 
 
 # -----------------------------------------------------------------------------
-# 3. Frameless Moss-Jade Contribution Matrix (Organic Zen garden aesthetic)
+# 3. Frameless Sleek Contribution Matrix (Sumi & Jade Tones)
 # -----------------------------------------------------------------------------
 def generate_contributions():
     raw_days = fetch_contributions_data()
@@ -177,10 +198,10 @@ def generate_contributions():
     if not contribs:
         contribs = raw_days
 
-    CELL, GAP, RAD, LEFT, TOP = 11, 4, 3, 28, 22
-    # Moss & Bamboo Japanese Zen hues
-    COLORS = ["#161b22", "#133a27", "#1d633d", "#2da44e", "#39d353"]
-    GRAY = "#6e7681"
+    CELL, GAP, RAD, LEFT, TOP = 11, 4, 2, 28, 22
+    # Sumi & Emerald Japanese High-End Palette
+    COLORS = ["#161b22", "#0f3822", "#195c36", "#269344", "#39d353"]
+    GRAY = "#57606a"
     MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
 
     n = len(contribs)
@@ -213,13 +234,13 @@ def generate_contributions():
         cls = "c g" if lvl >= 1 else "c e"
         rects.append(
             f'<rect class="{cls}" x="{x}" y="{y}" width="{CELL}" height="{CELL}" rx="{RAD}" '
-            f'fill="{COLORS[lvl]}" style="animation-delay:{delay}s"/>'
+            f'fill="{COLORS[lvl]}" stroke="#21262d" stroke-width="0.5" style="animation-delay:{delay}s"/>'
         )
 
     svg = f'''<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}" fill="none">
   <defs>
     <style>
-      text.lbl {{ fill:{GRAY}; font-size:9.5px; font-weight:500; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', monospace; }}
+      text.lbl {{ fill:{GRAY}; font-size:9.5px; font-weight:500; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', monospace; letter-spacing:0.5px; }}
       .c {{ transform-box:fill-box; transform-origin:center; opacity:0; animation:pop {DUR}s ease-out both; }}
       .g {{ animation:pop {DUR}s ease-out both, flash {DUR+0.15}s ease-out both; }}
       @keyframes pop {{ 0%{{opacity:0;transform:scale(.2)}} 60%{{opacity:1;transform:scale(1.04)}} 100%{{opacity:1;transform:scale(1)}} }}
@@ -241,17 +262,17 @@ def generate_contributions():
 
 
 # -----------------------------------------------------------------------------
-# 4. Japanese Minimalist README.md (English Only)
+# 4. Japanese Minimalist README.md (English Only, Pure Precision)
 # -----------------------------------------------------------------------------
 def generate_readme(has_contrib):
     md = []
 
-    # Zen Minimal Header
+    # Sleek Premium Header
     md.append('<div align="center">\n')
-    md.append('  <img src="./assets/zen-header.svg" width="600" alt="Flynn Maxwel — Vibecoder" />\n')
+    md.append('  <img src="./assets/zen-header.svg" width="860" alt="Flynn Maxwel — Vibecoder" />\n')
     md.append('</div>\n\n')
 
-    # Centered Minimalist Philosophy / Location Statement
+    # Centered Minimalist Philosophy Statement
     md.append('<div align="center">\n\n')
     md.append(f'*{TAGLINE}*\n\n')
     md.append('</div>\n\n')
@@ -266,24 +287,24 @@ def generate_readme(has_contrib):
 
     md.append('<br/>\n\n')
 
-    # Craft & Tools (Inline Monochromatic Icons)
-    md.append('### Craft &amp; Tools\n\n')
+    # Craft & Tools (Inline Dark Icons)
+    md.append('### Craft &amp; Architecture\n\n')
     md.append('<img src="https://skillicons.dev/icons?i=python,js,ts,react,nextjs,nodejs,fastapi,postgres,docker,git,linux&theme=dark" alt="Craft & Tools" />\n\n')
 
     md.append('---\n\n')
 
-    # Garden / Works
-    md.append('### Works\n\n')
+    # Selected Works
+    md.append('### Selected Works\n\n')
     for work in FEATURED_WORKS:
         name = work.get("name", "Project")
         url = work.get("url", "#")
         desc = work.get("desc", "")
-        md.append(f'- [**{name}**]({url}) &mdash; {desc}\n')
-    md.append(f'- [**github.com/{USERNAME}**](https://github.com/{USERNAME}) &mdash; Open source repositories & experiments\n\n')
+        md.append(f'- [**`{name}`**]({url}) &mdash; {desc}\n')
+    md.append(f'- [**`github.com/{USERNAME}`**](https://github.com/{USERNAME}) &mdash; All open-source repositories & experiments\n\n')
 
     md.append('---\n\n')
 
-    # Connect (Quiet, Minimalist)
+    # Connect
     md.append('### Connect\n\n')
     for s in SOCIALS:
         label = s.get("label", "Link")
@@ -292,7 +313,7 @@ def generate_readme(has_contrib):
 
     with open("README.md", "w", encoding="utf-8") as f:
         f.writelines(md)
-    print("Generated Japanese Minimalist README.md")
+    print("Generated Sleek Japanese README.md")
 
 
 # -----------------------------------------------------------------------------
@@ -345,7 +366,7 @@ jobs:
 # -----------------------------------------------------------------------------
 if __name__ == "__main__":
     print("="*60)
-    print("Rendering Japanese Minimalist Profile Suite...")
+    print("Rendering Sleek Japanese Minimalist Profile Suite...")
     print("="*60)
 
     generate_zen_header()
