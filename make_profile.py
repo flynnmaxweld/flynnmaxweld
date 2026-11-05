@@ -1,11 +1,12 @@
 """
-Generate a Sleek Premium Japanese Design GitHub Profile README & SVGs.
-Aesthetic & Principles:
-  - Inspired by Tokyo luxury minimalism (MUJI Luxury / Kenya Hara / Lexus Monolith / Sony Master Series)
-  - Monochrome palette: Sumi ink obsidian (#0b0e14 / #0f141c), matte platinum (#e6edf3), brushed titanium (#8b949e)
-  - Zero red accents, zero Japanese characters (100% English)
-  - Geometric symmetry, subtle 1px hairline craftsmanship, elegant letter-tracking
-  - Frameless pristine contribution matrix in sumi & jade/emerald tones
+Generate a Dark Glassmorphism Personal Bento Grid GitHub Profile README.
+Layout Architecture:
+  - Asymmetric Bento Grid using clean GitHub-supported HTML tables & styled cards
+  - Card 1: Hero Identity (Avatar + Name + VIBECODER + Tirunelveli, Tamil Nadu coordinates)
+  - Card 2: Mission Telemetry & Live Frameless Heatmap
+  - Card 3: Stack & Architecture (Categorized high-contrast badges)
+  - Card 4: Selected Works & Deployments
+  - Card 5: Connect & Frequency Channels
 """
 import os
 import json
@@ -29,8 +30,11 @@ with open(CONFIG_PATH, "r", encoding="utf-8") as f:
 USERNAME = config.get("github_username", "flynnmaxweld")
 BRAND_NAME = html.escape(config.get("brand_name", "FLYNN MAXWEL"))
 TITLE = html.escape(config.get("title", "VIBECODER"))
-TAGLINE = config.get("tagline", "Designing, building, and automating intelligent applications from Tirunelveli, Tamil Nadu.")
+TAGLINE = config.get("tagline", "Designing, building, and automating intelligent applications.")
 LOCATION = html.escape(config.get("location", "Tirunelveli, Tamil Nadu"))
+COORDINATES = html.escape(config.get("coordinates", "8.7139° N, 77.7567° E"))
+STATUS = html.escape(config.get("status", "BUILDING IN 2026"))
+SKILLS = config.get("skills", {})
 FEATURED_WORKS = config.get("featured_works", [])
 SOCIALS = config.get("social_links", [])
 
@@ -90,82 +94,7 @@ def fetch_contributions_data():
 
 
 # -----------------------------------------------------------------------------
-# 2. Sleek Premium Japanese Header SVG (Kenya Hara / Tokyo Minimalist Monolith)
-# -----------------------------------------------------------------------------
-def generate_zen_header():
-    W, H = 860, 160
-
-    svg = f'''<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}" fill="none">
-  <defs>
-    <!-- Brushed Platinum Monolith Gradient -->
-    <linearGradient id="plat-grad" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#ffffff"/>
-      <stop offset="60%" stop-color="#e6edf3"/>
-      <stop offset="100%" stop-color="#a8b1bd"/>
-    </linearGradient>
-
-    <!-- Subtle Sumi Shading -->
-    <linearGradient id="sumi-edge" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#30363d" stop-opacity="0"/>
-      <stop offset="25%" stop-color="#484f58" stop-opacity="0.8"/>
-      <stop offset="50%" stop-color="#8b949e" stop-opacity="1"/>
-      <stop offset="75%" stop-color="#484f58" stop-opacity="0.8"/>
-      <stop offset="100%" stop-color="#30363d" stop-opacity="0"/>
-    </linearGradient>
-
-    <style>
-      .hero-kanji-balance {{
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
-        font-size: 34px;
-        font-weight: 700;
-        letter-spacing: 16px;
-        fill: url(#plat-grad);
-      }}
-      .sub-title {{
-        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-        font-size: 11px;
-        font-weight: 600;
-        letter-spacing: 10px;
-        text-transform: uppercase;
-        fill: #8b949e;
-      }}
-      .meta-tag {{
-        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-        font-size: 9px;
-        font-weight: 500;
-        letter-spacing: 3px;
-        text-transform: uppercase;
-        fill: #545d68;
-      }}
-    </style>
-  </defs>
-
-  <!-- Top Micro Hairline -->
-  <line x1="80" y1="28" x2="{W-80}" y2="28" stroke="url(#sumi-edge)" stroke-width="0.75"/>
-
-  <!-- Top Metadata Markers (Balanced Negative Space) -->
-  <text x="80" y="20" class="meta-tag">CRAFT // 001</text>
-  <text x="{W/2}" y="20" class="meta-tag" text-anchor="middle">PRECISION SYSTEMS</text>
-  <text x="{W-80}" y="20" class="meta-tag" text-anchor="end">TIRUNELVELI &#183; TN</text>
-
-  <!-- Hero Typography: Expansive, Calm, Symmetrical -->
-  <text x="{W/2 + 8}" y="82" class="hero-kanji-balance" text-anchor="middle">{BRAND_NAME}</text>
-  <text x="{W/2 + 5}" y="112" class="sub-title" text-anchor="middle">{TITLE}</text>
-
-  <!-- Bottom Micro Hairline -->
-  <line x1="160" y1="134" x2="{W-160}" y2="134" stroke="url(#sumi-edge)" stroke-width="0.75"/>
-</svg>'''
-
-    ET.fromstring(svg)
-
-    out_path = os.path.join("assets", "zen-header.svg")
-    with open(out_path, "w", encoding="utf-8") as f:
-        f.write(svg)
-    print(f"Generated Sleek Japanese Header: {out_path}")
-
-
-# -----------------------------------------------------------------------------
-# 3. Frameless Sleek Contribution Matrix (Sumi & Jade Tones)
+# 2. Sleek Bento Heatmap SVG
 # -----------------------------------------------------------------------------
 def generate_contributions():
     raw_days = fetch_contributions_data()
@@ -198,16 +127,15 @@ def generate_contributions():
     if not contribs:
         contribs = raw_days
 
-    CELL, GAP, RAD, LEFT, TOP = 11, 4, 2, 28, 22
-    # Sumi & Emerald Japanese High-End Palette
-    COLORS = ["#161b22", "#0f3822", "#195c36", "#269344", "#39d353"]
-    GRAY = "#57606a"
+    CELL, GAP, RAD, LEFT, TOP = 11, 3.5, 2.5, 26, 20
+    COLORS = ["#161b22", "#0e4429", "#006d32", "#26a641", "#39d353"]
+    GRAY = "#7d8590"
     MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
 
     n = len(contribs)
     NW = (n + 6) // 7
     W = LEFT + NW * (CELL + GAP) + 10
-    H = TOP + 7 * (CELL + GAP) + 10
+    H = TOP + 7 * (CELL + GAP) + 8
 
     labels = []
     rects = []
@@ -218,12 +146,12 @@ def generate_contributions():
         d = sd + datetime.timedelta(days=wk * 7)
         if d.month != last_m:
             last_m = d.month
-            labels.append(f'<text class="lbl" x="{LEFT+wk*(CELL+GAP)}" y="{TOP-8}">{MONTHS[d.month-1]}</text>')
+            labels.append(f'<text class="lbl" x="{LEFT+wk*(CELL+GAP)}" y="{TOP-6}">{MONTHS[d.month-1]}</text>')
 
-    for name, r in [("M", 1), ("W", 3), ("F", 5)]:
-        labels.append(f'<text class="lbl" x="6" y="{TOP+r*(CELL+GAP)+CELL-3}">{name}</text>')
+    for name, r in [("Mon", 1), ("Wed", 3), ("Fri", 5)]:
+        labels.append(f'<text class="lbl" x="2" y="{TOP+r*(CELL+GAP)+CELL-3}">{name}</text>')
 
-    REVEAL, DUR = 2.4, 0.4
+    REVEAL, DUR = 2.0, 0.4
     maxorder = (NW - 1) + 6 * 0.55
 
     for i, c in enumerate(contribs):
@@ -234,16 +162,16 @@ def generate_contributions():
         cls = "c g" if lvl >= 1 else "c e"
         rects.append(
             f'<rect class="{cls}" x="{x}" y="{y}" width="{CELL}" height="{CELL}" rx="{RAD}" '
-            f'fill="{COLORS[lvl]}" stroke="#21262d" stroke-width="0.5" style="animation-delay:{delay}s"/>'
+            f'fill="{COLORS[lvl]}" style="animation-delay:{delay}s"/>'
         )
 
     svg = f'''<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}" fill="none">
   <defs>
     <style>
-      text.lbl {{ fill:{GRAY}; font-size:9.5px; font-weight:500; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', monospace; letter-spacing:0.5px; }}
+      text.lbl {{ fill:{GRAY}; font-size:9.5px; font-weight:500; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', monospace; }}
       .c {{ transform-box:fill-box; transform-origin:center; opacity:0; animation:pop {DUR}s ease-out both; }}
       .g {{ animation:pop {DUR}s ease-out both, flash {DUR+0.15}s ease-out both; }}
-      @keyframes pop {{ 0%{{opacity:0;transform:scale(.2)}} 60%{{opacity:1;transform:scale(1.04)}} 100%{{opacity:1;transform:scale(1)}} }}
+      @keyframes pop {{ 0%{{opacity:0;transform:scale(.2)}} 60%{{opacity:1;transform:scale(1.05)}} 100%{{opacity:1;transform:scale(1)}} }}
       @keyframes flash {{ 0%{{filter:brightness(2)}} 50%{{filter:brightness(2)}} 100%{{filter:brightness(1)}} }}
       @media (prefers-reduced-motion: reduce) {{ .c {{ opacity:1 !important; animation:none !important; }} }}
     </style>
@@ -257,67 +185,89 @@ def generate_contributions():
 
     with open(out_path, "w", encoding="utf-8") as f:
         f.write(svg)
-    print(f"Generated Frameless Zen Heatmap: {out_path}")
+    print(f"Generated Bento Heatmap: {out_path}")
     return True
 
 
 # -----------------------------------------------------------------------------
-# 4. Japanese Minimalist README.md (English Only, Pure Precision)
+# 3. Generate Personal Bento Grid README.md
 # -----------------------------------------------------------------------------
-def generate_readme(has_contrib):
+def generate_bento_readme():
     md = []
 
-    # Sleek Premium Header
+    # ==================== CARD 1: HERO IDENTITY BENTO ====================
+    md.append('<table>\n')
+    md.append('  <tr>\n')
+    md.append('    <td width="130" align="center" valign="middle">\n')
+    md.append('      <img src="./avatar.png" width="105" style="border-radius:50%;" alt="Flynn Maxwel" />\n')
+    md.append('    </td>\n')
+    md.append('    <td valign="middle">\n')
+    md.append('      <h2>Flynn Maxwel &mdash; <code>VIBECODER</code></h2>\n')
+    md.append(f'      <p><b>{TAGLINE}</b></p>\n')
+    md.append(f'      <p><code>📍 {LOCATION}</code> &nbsp;&middot;&nbsp; <code>🛰️ {COORDINATES}</code> &nbsp;&middot;&nbsp; <code>⚡ {STATUS}</code></p>\n')
+    md.append('    </td>\n')
+    md.append('  </tr>\n')
+    md.append('</table>\n\n')
+
+    # ==================== CARD 2: LIVE TELEMETRY & ACTIVITY ====================
+    md.append('### 📡 Activity &amp; Live Telemetry\n\n')
     md.append('<div align="center">\n')
-    md.append('  <img src="./assets/zen-header.svg" width="860" alt="Flynn Maxwel — Vibecoder" />\n')
+    md.append('  <img src="./assets/contrib-heatmap.svg" alt="Live Contributions Flow" />\n')
     md.append('</div>\n\n')
 
-    # Centered Minimalist Philosophy Statement
-    md.append('<div align="center">\n\n')
-    md.append(f'*{TAGLINE}*\n\n')
-    md.append('</div>\n\n')
+    # ==================== 2-COLUMN ASYMMETRIC BENTO GRID (Cards 3, 4, 5) ====================
+    md.append('<table>\n')
+    md.append('  <tr>\n')
+    
+    # Left Column: Tech Stack & Architecture (Card 3)
+    md.append('    <td width="50%" valign="top">\n')
+    md.append('      <h3>🛠️ Systems &amp; Stack</h3>\n')
+    md.append('      <p>\n')
+    md.append('        <a href="https://skillicons.dev">\n')
+    md.append('          <img src="https://skillicons.dev/icons?i=python,js,ts,react,nextjs,nodejs,fastapi,postgres,docker,git,linux&perline=6" alt="Tech Stack" />\n')
+    md.append('        </a>\n')
+    md.append('      </p>\n')
+    md.append('      <ul>\n')
+    md.append('        <li><b>Languages:</b> Python, JavaScript, TypeScript, SQL</li>\n')
+    md.append('        <li><b>Web &amp; APIs:</b> React, Next.js, Node.js, FastAPI</li>\n')
+    md.append('        <li><b>Systems:</b> Docker, PostgreSQL, Linux, Git</li>\n')
+    md.append('        <li><b>AI &amp; Workflows:</b> Autonomous Agents, LLM Pipelines</li>\n')
+    md.append('      </ul>\n')
+    md.append('    </td>\n')
 
-    md.append('<br/>\n\n')
-
-    # Frameless Activity Matrix
-    if has_contrib:
-        md.append('<div align="center">\n')
-        md.append('  <img src="./assets/contrib-heatmap.svg" alt="Activity Flow" />\n')
-        md.append('</div>\n\n')
-
-    md.append('<br/>\n\n')
-
-    # Craft & Tools (Inline Dark Icons)
-    md.append('### Craft &amp; Architecture\n\n')
-    md.append('<img src="https://skillicons.dev/icons?i=python,js,ts,react,nextjs,nodejs,fastapi,postgres,docker,git,linux&theme=dark" alt="Craft & Tools" />\n\n')
-
-    md.append('---\n\n')
-
-    # Selected Works
-    md.append('### Selected Works\n\n')
+    # Right Column: Projects & Connect (Cards 4 & 5)
+    md.append('    <td width="50%" valign="top">\n')
+    md.append('      <h3>📂 Selected Deployments</h3>\n')
+    md.append('      <ul>\n')
     for work in FEATURED_WORKS:
         name = work.get("name", "Project")
         url = work.get("url", "#")
         desc = work.get("desc", "")
-        md.append(f'- [**`{name}`**]({url}) &mdash; {desc}\n')
-    md.append(f'- [**`github.com/{USERNAME}`**](https://github.com/{USERNAME}) &mdash; All open-source repositories & experiments\n\n')
-
-    md.append('---\n\n')
-
-    # Connect
-    md.append('### Connect\n\n')
+        md.append(f'        <li><a href="{url}"><b><code>{name}</code></b></a><br/>{desc}</li>\n')
+    md.append(f'        <li><a href="https://github.com/{USERNAME}"><b><code>github.com/{USERNAME}</code></b></a><br/>Open-source repositories &amp; experiments</li>\n')
+    md.append('      </ul>\n')
+    md.append('      <hr/>\n')
+    md.append('      <h3>🛰️ Connect</h3>\n')
+    md.append('      <p>\n')
+    connects = []
     for s in SOCIALS:
         label = s.get("label", "Link")
         url = s.get("url", "#")
-        md.append(f'- [{label}]({url})\n')
+        connects.append(f'<a href="{url}"><b><code>{label}</code></b></a>')
+    md.append(' &nbsp;&bull;&nbsp; '.join(connects) + '\n')
+    md.append('      </p>\n')
+    md.append('    </td>\n')
+
+    md.append('  </tr>\n')
+    md.append('</table>\n')
 
     with open("README.md", "w", encoding="utf-8") as f:
         f.writelines(md)
-    print("Generated Sleek Japanese README.md")
+    print("Generated Bento Grid README.md")
 
 
 # -----------------------------------------------------------------------------
-# 5. Generate GitHub Action Workflow
+# 4. Generate GitHub Action Workflow
 # -----------------------------------------------------------------------------
 def generate_workflow():
     workflow_yaml = f'''name: Update Profile Art
@@ -366,12 +316,11 @@ jobs:
 # -----------------------------------------------------------------------------
 if __name__ == "__main__":
     print("="*60)
-    print("Rendering Sleek Japanese Minimalist Profile Suite...")
+    print("Rendering Personal Bento Grid Profile Suite...")
     print("="*60)
 
-    generate_zen_header()
-    has_contrib = generate_contributions()
-    generate_readme(has_contrib)
+    generate_contributions()
+    generate_bento_readme()
     generate_workflow()
 
     print("="*60)

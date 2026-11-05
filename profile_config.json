@@ -2,19 +2,28 @@
   "github_username": "flynnmaxweld",
   "display_name": "Flynn Maxwel D",
   "brand_name": "FLYNN MAXWEL",
-  "title": "Vibecoder",
-  "tagline": "Designing, building, and automating intelligent applications from Tirunelveli, Tamil Nadu.",
+  "title": "VIBECODER",
+  "tagline": "Designing, building, and automating intelligent applications.",
   "location": "Tirunelveli, Tamil Nadu",
+  "coordinates": "8.7139° N, 77.7567° E",
+  "status": "BUILDING IN 2026",
+  "avatar_path": "avatar.png",
+  "skills": {
+    "Core": ["Python", "JavaScript", "TypeScript", "SQL"],
+    "Web": ["React", "Next.js", "Node.js", "FastAPI"],
+    "Systems": ["Docker", "PostgreSQL", "Git", "Linux"],
+    "AI": ["LLMs", "LangChain", "Autonomous Agents"]
+  },
   "featured_works": [
     {
       "name": "flynnmaxweld.github.io",
       "url": "https://flynnmaxweld.github.io",
-      "desc": "Personal space & digital garden"
+      "desc": "Personal digital space & portfolio"
     },
     {
-      "name": "Intelligent Agents & Systems",
+      "name": "Intelligent Agents & Automations",
       "url": "https://github.com/flynnmaxweld",
-      "desc": "Autonomous pipelines, LLM utilities & experiments"
+      "desc": "Autonomous pipelines, LLM utilities & systems"
     }
   ],
   "social_links": [
