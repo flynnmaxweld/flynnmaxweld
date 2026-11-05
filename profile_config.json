@@ -1,16 +1,29 @@
 {
   "github_username": "flynnmaxweld",
   "display_name": "Flynn Maxwel D",
-  "wordmark_text": "FLYNN",
-  "title": "Fullstack Developer · AI Builder · Instructor",
-  "photo_path": "avatar.png",
-  "skills": [
-    "Python",
-    "JavaScript",
-    "React",
-    "Next.js",
-    "Node.js",
-    "SQL"
+  "brand_name": "FLYNN MAXWEL",
+  "title": "Vibecoder · Fullstack & AI Systems Architect",
+  "tagline": "Designing, building, and automating intelligent applications from New Delhi, India.",
+  "location": "New Delhi, India",
+  "coordinates": "28.6139° N, 77.2090° E",
+  "status": "BUILDING IN 2026",
+  "skills": {
+    "Core & Languages": ["Python", "JavaScript", "TypeScript", "SQL"],
+    "Frameworks & Web": ["React", "Next.js", "Node.js", "FastAPI"],
+    "Systems & Cloud": ["Docker", "PostgreSQL", "Git", "Linux"],
+    "AI & Automation": ["LLM Workflows", "LangChain", "Autonomous Agents"]
+  },
+  "featured_works": [
+    {
+      "name": "flynnmaxweld.github.io",
+      "url": "https://flynnmaxweld.github.io",
+      "desc": "Personal space, interactive experiments & engineering notes"
+    },
+    {
+      "name": "AI & Automation Agents",
+      "url": "https://github.com/flynnmaxweld",
+      "desc": "Autonomous agent pipelines, LLM utilities, and fullstack tools"
+    }
   ],
   "social_links": [
     {
@@ -26,6 +39,13 @@
       "url": "https://linkedin.com/in/flynnmaxwel",
       "color": "0A66C2",
       "logo": "linkedin"
+    },
+    {
+      "label": "Email",
+      "value": "flynnmaxweld@gmail.com",
+      "url": "mailto:flynnmaxweld@gmail.com",
+      "color": "EA4335",
+      "logo": "gmail"
     }
   ]
 }

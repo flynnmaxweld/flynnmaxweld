@@ -1,17 +1,19 @@
 """
-Generate a customized, minimalist Swiss-style GitHub profile README.
+Generate a minimalist Swiss-style GitHub profile README & dynamic SVGs.
 Includes:
-  1. Animated GitHub contribution heatmap generator (fetching live data from Jan 2026 to today)
-  2. Editorial minimalist README.md layout with badges and a filling grid
-  3. GitHub Actions workflow to auto-refresh the profile daily
+  1. Dynamic Swiss Editorial Header Banner SVG (`assets/header.svg`)
+  2. Dynamic Contribution Heatmap SVG (`assets/contrib-heatmap.svg`) with zero external dependency fallback
+  3. High-contrast Swiss-style README.md layout
+  4. GitHub Actions workflow to auto-refresh daily
 """
 import os
 import json
 import urllib.request
 import re
 import datetime
+from html.parser import HTMLParser
 
-# Make sure folders exist
+# Ensure directories exist
 os.makedirs("assets", exist_ok=True)
 os.makedirs(os.path.join(".github", "workflows"), exist_ok=True)
 
@@ -23,125 +25,222 @@ if not os.path.exists(CONFIG_PATH):
 with open(CONFIG_PATH, "r", encoding="utf-8") as f:
     config = json.load(f)
 
-# Profile Info
-USERNAME = config.get("github_username", "username")
-DISPLAY_NAME = "Flynn Maxwel" # Set as requested
-TITLE = config.get("title", "Fullstack Developer · AI Enthusiast")
-SKILLS = config.get("skills", ["Python", "JavaScript", "React"])
+USERNAME = config.get("github_username", "flynnmaxweld")
+BRAND_NAME = config.get("brand_name", "FLYNN MAXWEL")
+TITLE = config.get("title", "Vibecoder · Fullstack & AI Systems Architect")
+TAGLINE = config.get("tagline", "Designing, building, and automating intelligent applications from New Delhi, India.")
+COORDINATES = config.get("coordinates", "28.6139° N, 77.2090° E")
+LOCATION = config.get("location", "New Delhi, IN")
+STATUS = config.get("status", "BUILDING IN 2026")
+SKILLS = config.get("skills", {})
+FEATURED_WORKS = config.get("featured_works", [])
 SOCIALS = config.get("social_links", [])
 
 # -----------------------------------------------------------------------------
-# 1. Live Contribution Heatmap Graph SVG Generator (Scraping & Date Filtering)
+# 1. Generate Editorial Swiss Header Banner SVG
 # -----------------------------------------------------------------------------
-def generate_contributions():
+def generate_header():
+    W, H = 860, 220
+    
+    svg = f'''<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}" fill="none">
+  <defs>
+    <linearGradient id="grid-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#30363d" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#161b22" stop-opacity="0.1"/>
+    </linearGradient>
+    <linearGradient id="text-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="70%" stop-color="#f0f6fc"/>
+      <stop offset="100%" stop-color="#8b949e"/>
+    </linearGradient>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&amp;family=Space+Grotesk:wght@500;700;800&amp;display=swap');
+      .title {{
+        font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        font-size: 50px;
+        font-weight: 800;
+        letter-spacing: -1.5px;
+        fill: url(#text-grad);
+      }}
+      .mono-meta {{
+        font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+        font-size: 11px;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+      }}
+      .sub {{
+        font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+        font-size: 15px;
+        font-weight: 500;
+        fill: #8b949e;
+        letter-spacing: -0.2px;
+      }}
+      .status-dot {{
+        animation: pulse 2.5s infinite;
+      }}
+      @keyframes pulse {{
+        0%, 100% {{ opacity: 1; transform: scale(1); }}
+        50% {{ opacity: 0.45; transform: scale(0.9); }}
+      }}
+    </style>
+  </defs>
+
+  <!-- Card Background with 1px Swiss Editorial Border -->
+  <rect x="0.5" y="0.5" width="{W-1}" height="{H-1}" rx="8" fill="#0d1117" stroke="#30363d" stroke-width="1"/>
+  
+  <!-- Subtle Architectural Grid Accent Lines -->
+  <line x1="36" y1="48" x2="{W-36}" y2="48" stroke="#21262d" stroke-width="1"/>
+  <line x1="36" y1="{H-44}" x2="{W-36}" y2="{H-44}" stroke="#21262d" stroke-width="1"/>
+  <line x1="610" y1="48" x2="610" y2="{H-44}" stroke="#21262d" stroke-width="1" stroke-dasharray="3 3"/>
+
+  <!-- Top Metadata Bar -->
+  <text x="36" y="32" class="mono-meta" fill="#8b949e">INDEX // 001</text>
+  <text x="140" y="32" class="mono-meta" fill="#3fb950">● {STATUS}</text>
+  <text x="{W-36}" y="32" class="mono-meta" fill="#8b949e" text-anchor="end">{COORDINATES} · {LOCATION}</text>
+
+  <!-- Big Hero Wordmark -->
+  <text x="36" y="112" class="title">{BRAND_NAME}</text>
+  
+  <!-- Subtitle -->
+  <text x="38" y="146" class="sub">{TITLE}</text>
+
+  <!-- Right Telemetry Panel -->
+  <text x="630" y="80" class="mono-meta" fill="#8b949e">ARCHITECTURE</text>
+  <text x="630" y="102" class="mono-meta" fill="#f0f6fc">AUTONOMOUS &amp; DISTRIBUTED</text>
+  
+  <text x="630" y="132" class="mono-meta" fill="#8b949e">FOCUS</text>
+  <text x="630" y="152" class="mono-meta" fill="#388bfd">AI AGENTS &amp; FULL-STACK</text>
+
+  <!-- Bottom Navigation / Metadata Footer -->
+  <text x="36" y="{H-20}" class="mono-meta" fill="#484f58">SYSTEM: ONLINE</text>
+  <text x="{W-36}" y="{H-20}" class="mono-meta" fill="#8b949e" text-anchor="end">SWISS EDITORIAL V2.0 // @{USERNAME}</text>
+</svg>'''
+
+    out_path = os.path.join("assets", "header.svg")
+    with open(out_path, "w", encoding="utf-8") as f:
+        f.write(svg)
+    print(f"Generated Editorial Header Banner: {out_path}")
+
+
+# -----------------------------------------------------------------------------
+# 2. Robust HTML Parser Fallback for Contribution Calendar
+# -----------------------------------------------------------------------------
+class ContributionHTMLParser(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.days = []
+        
+    def handle_starttag(self, tag, attrs):
+        if tag == "td":
+            attr_dict = dict(attrs)
+            if "data-date" in attr_dict and "data-level" in attr_dict:
+                self.days.append({
+                    "date": attr_dict["data-date"],
+                    "level": int(attr_dict["data-level"])
+                })
+
+
+def fetch_contributions_data():
     url = f"https://github.com/users/{USERNAME}/contributions"
     print(f"Fetching contribution data from: {url}")
     try:
         req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
-        with urllib.request.urlopen(req, timeout=25) as r:
+        with urllib.request.urlopen(req, timeout=20) as r:
             html_text = r.read().decode("utf-8")
     except Exception as e:
-        print(f"Error fetching contributions: {e}. Skipping contributions graphic.")
-        return False
+        print(f"Warning: Could not fetch live contributions: {e}")
+        return None
 
+    # Try bs4 if available, otherwise use native HTMLParser
+    raw_days = []
     try:
         from bs4 import BeautifulSoup
+        soup = BeautifulSoup(html_text, "html.parser")
+        for td in soup.select("td.ContributionCalendar-day"):
+            dt = td.get("data-date")
+            lvl = td.get("data-level")
+            if dt and lvl is not None:
+                raw_days.append({"date": dt, "level": int(lvl)})
     except ImportError:
-        print("BeautifulSoup (bs4) library is required to scrape contributions. Skipping contributions graphic.")
-        return False
-        
-    soup = BeautifulSoup(html_text, "html.parser")
-    
-    # Get total contributions from raw page to display
-    h2 = soup.find("h2", class_=lambda c: c and "f4" in c and "text-normal" in c)
-    if not h2:
-        h2 = soup.find(id="js-contribution-activity-description")
-    
-    total = 0
-    if h2:
-        txt = h2.get_text(strip=True)
-        m = re.search(r"([\d,]+)\s+contribution", txt)
-        if m:
-            total = int(m.group(1).replace(",", ""))
-            
-    cells = soup.select("td.ContributionCalendar-day")
-    if not cells:
-        print("No contribution cells found in scraped page. Skipping contributions graphic.")
-        return False
-        
-    raw_days = []
-    for td in cells:
-        dt = td.get("data-date")
-        lvl = td.get("data-level")
-        if dt and lvl is not None:
-            raw_days.append({
-                "date": dt,
-                "level": int(lvl)
-            })
-            
+        parser = ContributionHTMLParser()
+        parser.feed(html_text)
+        raw_days = parser.days
+
     if not raw_days:
-        print("No contribution records parsed. Skipping contributions graphic.")
-        return False
-        
-    raw_days.sort(key=lambda x: x["date"])
+        matches = re.findall(r'data-date="([\d\-]+)"[^>]*data-level="(\d+)"', html_text)
+        if not matches:
+            matches = re.findall(r'data-level="(\d+)"[^>]*data-date="([\d\-]+)"', html_text)
+            matches = [(d, l) for (l, d) in matches]
+        for dt, lvl in matches:
+            raw_days.append({"date": dt, "level": int(lvl)})
+
+    return raw_days
+
+
+# -----------------------------------------------------------------------------
+# 3. Dynamic Contribution Heatmap SVG Generator
+# -----------------------------------------------------------------------------
+def generate_contributions():
+    raw_days = fetch_contributions_data()
+    out_path = os.path.join("assets", "contrib-heatmap.svg")
     
-    # Filter: Show from current year Jan 2026 to live
-    # Find the index of the first day of 2026
+    if not raw_days:
+        if os.path.exists(out_path):
+            print("Preserving existing contrib-heatmap.svg.")
+            return True
+        print("No contribution data found. Generating placeholder calendar.")
+        today = datetime.date.today()
+        raw_days = []
+        for i in range(120):
+            d = today - datetime.timedelta(days=119 - i)
+            raw_days.append({"date": d.isoformat(), "level": 0})
+
+    raw_days.sort(key=lambda x: x["date"])
+
     first_2026_idx = -1
     for idx, day in enumerate(raw_days):
         if day["date"] >= "2026-01-01":
             first_2026_idx = idx
             break
-            
-    if first_2026_idx == -1:
-        # Fallback if no 2026 data yet
-        print("No 2026 data found yet. Using all parsed days.")
-        contribs = raw_days
-    else:
-        # To align grid rows to Sunday-Saturday, find the Sunday of that week (index must be multiple of 7)
+
+    if first_2026_idx != -1:
         start_idx = (first_2026_idx // 7) * 7
         contribs = raw_days[start_idx:]
-        
+    else:
+        contribs = raw_days[-(26 * 7):] if len(raw_days) >= 26 * 7 else raw_days
+
     if not contribs:
         contribs = raw_days
-        
-    # Re-calculate total contributions in this filtered range
-    filtered_total = sum(c["level"] for c in contribs) # approximate level counts, or fetch total
-    # Let's count days that have levels > 0 for a more accurate count
-    # But since we don't have exact counts, we can show total contributions in the year 2026
-    # Or just count the parsed counts:
-    # Actually, we can fetch the exact count from the scraped page for the year 2026 or estimate.
-    # Let's just calculate how many contributions are in 2026 by searching for cells >= 2026-01-01
-    # and reading the tooltip counts if we parsed them.
-    # Note: we scraped cells, but counts are tooltips. We can count the sum of cells levels as activity.
-    # To keep it standard, let's say "Contributions since Jan 2026"
-    
-    CELL, GAP, RAD, LEFT, TOP = 13, 3, 2.5, 34, 24
+
+    CELL, GAP, RAD, LEFT, TOP = 13, 3.5, 3, 38, 48
     COLORS = ["#161b22", "#0e4429", "#006d32", "#26a641", "#39d353"]
     GRAY = "#7d8590"
     MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
-    
+
     n = len(contribs)
     NW = (n + 6) // 7
-    W = LEFT + NW * (CELL + GAP) + 6
-    H = TOP + 7 * (CELL + GAP) + 22
-    
-    REVEAL, DUR = 3.6, 0.55
-    maxorder = (NW - 1) + 6 * 0.55
-    
-    rects, labels = [], []
+    W = 860
+    H = 195
+
+    active_days = sum(1 for c in contribs if c["level"] > 0)
+
+    labels = []
+    rects = []
     sd = datetime.date.fromisoformat(contribs[0]["date"])
     last_m = None
-    
+
     for wk in range(NW):
         d = sd + datetime.timedelta(days=wk * 7)
         if d.month != last_m:
             last_m = d.month
-            labels.append(f'<text class="lbl" x="{LEFT+wk*(CELL+GAP)}" y="{TOP-8}">{MONTHS[d.month-1]}</text>')
-            
+            labels.append(f'<text class="lbl" x="{LEFT+wk*(CELL+GAP)}" y="{TOP-12}">{MONTHS[d.month-1]}</text>')
+
     for name, r in [("Mon", 1), ("Wed", 3), ("Fri", 5)]:
-        labels.append(f'<text class="lbl" x="2" y="{TOP+r*(CELL+GAP)+CELL-2}">{name}</text>')
-        
+        labels.append(f'<text class="lbl" x="6" y="{TOP+r*(CELL+GAP)+CELL-3}">{name}</text>')
+
+    REVEAL, DUR = 3.0, 0.45
+    maxorder = (NW - 1) + 6 * 0.55
+
     for i, c in enumerate(contribs):
         wk, row, lvl = i // 7, i % 7, c["level"]
         x = LEFT + wk * (CELL + GAP)
@@ -150,117 +249,141 @@ def generate_contributions():
         cls = "c g" if lvl >= 1 else "c e"
         rects.append(
             f'<rect class="{cls}" x="{x}" y="{y}" width="{CELL}" height="{CELL}" rx="{RAD}" '
-            f'fill="{COLORS[lvl]}" style="animation-delay:{delay}s"/>'
+            f'fill="{COLORS[lvl]}" stroke="#30363d" stroke-width="0.5" style="animation-delay:{delay}s"/>'
         )
-        
-    svg = f'''<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}" font-family="-apple-system,Segoe UI,Helvetica,Arial,sans-serif">
-<style>
-  text.lbl {{ fill:{GRAY}; font-size:13px; font-weight:600; }}
-  text.total {{ fill:#e6edf3; font-size:15px; font-weight:700; }}
-  .c {{ transform-box:fill-box; transform-origin:center; opacity:0; animation:pop {DUR}s ease-out both; }}
-  .g {{ animation:pop {DUR}s ease-out both, flash {DUR+0.15}s ease-out both; }}
-  @keyframes pop {{ 0%{{opacity:0;transform:scale(.2)}} 60%{{opacity:1;transform:scale(1.1)}} 100%{{opacity:1;transform:scale(1)}} }}
-  @keyframes flash {{ 0%{{filter:brightness(2.4)}} 45%{{filter:brightness(2.4)}} 100%{{filter:brightness(1)}} }}
-  @media (prefers-reduced-motion: reduce) {{ .c {{ opacity:1 !important; animation:none !important; }} }}
-</style>
-<rect width="{W}" height="{H}" fill="none"/>
-{"".join(labels)}
-{"".join(rects)}
-<text class="total" x="{LEFT}" y="{H-6}">Live contributions since Jan 2026</text>
+
+    svg = f'''<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}" fill="none">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&amp;display=swap');
+      text.lbl {{ fill:{GRAY}; font-size:11px; font-weight:500; font-family:'JetBrains Mono', monospace; }}
+      text.meta {{ fill:#8b949e; font-size:11px; font-family:'JetBrains Mono', monospace; letter-spacing:1px; }}
+      text.strong {{ fill:#f0f6fc; font-weight:600; }}
+      .c {{ transform-box:fill-box; transform-origin:center; opacity:0; animation:pop {DUR}s ease-out both; }}
+      .g {{ animation:pop {DUR}s ease-out both, flash {DUR+0.15}s ease-out both; }}
+      @keyframes pop {{ 0%{{opacity:0;transform:scale(.2)}} 60%{{opacity:1;transform:scale(1.08)}} 100%{{opacity:1;transform:scale(1)}} }}
+      @keyframes flash {{ 0%{{filter:brightness(2.2)}} 50%{{filter:brightness(2.2)}} 100%{{filter:brightness(1)}} }}
+      @media (prefers-reduced-motion: reduce) {{ .c {{ opacity:1 !important; animation:none !important; }} }}
+    </style>
+  </defs>
+
+  <rect x="0.5" y="0.5" width="{W-1}" height="{H-1}" rx="8" fill="#0d1117" stroke="#30363d" stroke-width="1"/>
+
+  <text x="24" y="24" class="meta">ACTIVITY STREAM // LIVE CONTRIBUTION TELEMETRY</text>
+  <text x="{W-24}" y="24" class="meta" text-anchor="end"><tspan fill="#39d353">●</tspan> ACTIVE DAYS: <tspan class="strong">{active_days}</tspan></text>
+
+  {"".join(labels)}
+  {"".join(rects)}
+
+  <g transform="translate({W-160}, {H-18})">
+    <text class="lbl" x="-32" y="9">Less</text>
+    <rect x="0" y="0" width="10" height="10" rx="2" fill="{COLORS[0]}" stroke="#30363d" stroke-width="0.5"/>
+    <rect x="14" y="0" width="10" height="10" rx="2" fill="{COLORS[1]}"/>
+    <rect x="28" y="0" width="10" height="10" rx="2" fill="{COLORS[2]}"/>
+    <rect x="42" y="0" width="10" height="10" rx="2" fill="{COLORS[3]}"/>
+    <rect x="56" y="0" width="10" height="10" rx="2" fill="{COLORS[4]}"/>
+    <text class="lbl" x="72" y="9">More</text>
+  </g>
+  <text x="24" y="{H-10}" class="meta">TIMELINE: <tspan class="strong">{contribs[0]["date"]} &rarr; {contribs[-1]["date"]}</tspan></text>
 </svg>'''
 
-    out_path = os.path.join("assets", "contrib-heatmap.svg")
     with open(out_path, "w", encoding="utf-8") as f:
         f.write(svg)
-    print(f"Successfully generated contributions heatmap: {out_path}")
+    print(f"Generated Contributions Heatmap: {out_path}")
     return True
 
+
 # -----------------------------------------------------------------------------
-# 2. Swiss/Editorial Minimalist README.md Generator (Badges & Grid Icons)
+# 4. Generate Swiss Editorial README.md
 # -----------------------------------------------------------------------------
 def generate_readme(has_contrib):
     md = []
-    
-    # Custom requested title
-    md.append(f'# Flynn Maxwel &mdash; Vibecoder\n\n')
-    
-    # Editorial Bio sentence
-    md.append('Designing, building, and automating intelligent applications from New Delhi, India.\n\n')
-    
-    md.append('---\n\n')
-    
-    # Center section for Contribution Heatmap
+
+    # Dynamic Editorial Hero Banner
+    md.append('<div align="center">\n')
+    md.append('  <a href="https://flynnmaxweld.github.io">\n')
+    md.append('    <img src="./assets/header.svg" width="100%" alt="Flynn Maxwel — Vibecoder &amp; AI Systems Architect" />\n')
+    md.append('  </a>\n')
+    md.append('</div>\n\n')
+
+    # Editorial Statement Box
+    md.append(f'> **"{TAGLINE}"**\n\n')
+
+    # Dynamic Heatmap Graph
     if has_contrib:
         md.append('<div align="center">\n')
-        md.append(f'<img src="./assets/contrib-heatmap.svg" width="860" alt="Flynn Maxwel\'s GitHub contributions" />\n')
+        md.append('  <img src="./assets/contrib-heatmap.svg" width="100%" alt="Flynn Maxwel Contribution Telemetry" />\n')
         md.append('</div>\n\n')
-        md.append('---\n\n')
-        
-    # Tech Stack & Skills with Icons
-    md.append('### 🛠️ Tech Stack &amp; Skills\n\n')
-    md.append('| Category | Technologies |\n')
-    md.append('| :--- | :--- |\n')
-    
-    # Build clean shield icon badges
-    langs = ' '.join([
-        '![](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white)',
-        '![](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)',
-        '![](https://img.shields.io/badge/React-20232A?style=flat-square&logo=react&logoColor=61DAFB)'
-    ])
-    frameworks = ' '.join([
-        '![](https://img.shields.io/badge/Next.js-black?style=flat-square&logo=next.js&logoColor=white)',
-        '![](https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=node.js&logoColor=white)'
-    ])
-    databases = ' '.join([
-        '![](https://img.shields.io/badge/SQL-CC292B?style=flat-square&logo=sqlite&logoColor=white)',
-        '![](https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white)'
-    ])
-    
-    md.append(f'| **Languages &amp; Core** | {langs} |\n')
-    md.append(f'| **Frameworks &amp; Web** | {frameworks} |\n')
-    md.append(f'| **Databases &amp; Systems** | {databases} |\n\n')
-    
+
     md.append('---\n\n')
-    
-    # /works index section with emojis
-    md.append('### 📂 /works\n\n')
-    portfolio_url = None
-    for s in SOCIALS:
-        if s.get("label") == "Portfolio":
-            portfolio_url = s.get("url")
-            
-    if portfolio_url:
-        md.append(f'- [**{portfolio_url.replace("https://", "").replace("http://", "")}**]({portfolio_url}) &mdash; Personal Space &amp; Portfolio\n')
-    md.append(f'- [**github.com/{USERNAME}**](https://github.com/{USERNAME}) &mdash; Open Source Repositories &amp; Experiments\n\n')
-    
-    # /connect section with icons
-    md.append('### 🔗 /connect\n\n')
+
+    # Tech Stack & Systems Matrix
+    md.append('### ⚙️ Systems &amp; Stack Architecture\n\n')
+    md.append('| Domain | Stack &amp; Technologies |\n')
+    md.append('| :--- | :--- |\n')
+
+    badge_map = {
+        "Python": "https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white",
+        "JavaScript": "https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black",
+        "TypeScript": "https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white",
+        "SQL": "https://img.shields.io/badge/SQL-CC292B?style=flat-square&logo=sqlite&logoColor=white",
+        "React": "https://img.shields.io/badge/React-20232A?style=flat-square&logo=react&logoColor=61DAFB",
+        "Next.js": "https://img.shields.io/badge/Next.js-000000?style=flat-square&logo=next.js&logoColor=white",
+        "Node.js": "https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=node.js&logoColor=white",
+        "FastAPI": "https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white",
+        "Docker": "https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white",
+        "PostgreSQL": "https://img.shields.io/badge/PostgreSQL-4169E1?style=flat-square&logo=postgresql&logoColor=white",
+        "Git": "https://img.shields.io/badge/Git-F05032?style=flat-square&logo=git&logoColor=white",
+        "Linux": "https://img.shields.io/badge/Linux-FCC624?style=flat-square&logo=linux&logoColor=black",
+        "LLM Workflows": "https://img.shields.io/badge/LLMs_%26_Pipelines-8A2BE2?style=flat-square&logo=openai&logoColor=white",
+        "LangChain": "https://img.shields.io/badge/LangChain-1C3C3C?style=flat-square&logo=langchain&logoColor=white",
+        "Autonomous Agents": "https://img.shields.io/badge/Autonomous_Agents-0052CC?style=flat-square&logo=probot&logoColor=white"
+    }
+
+    if isinstance(SKILLS, dict):
+        for category, items in SKILLS.items():
+            badges = []
+            for item in items:
+                url = badge_map.get(item, f"https://img.shields.io/badge/{item.replace(' ', '_')}-21262d?style=flat-square")
+                badges.append(f'![]({url})')
+            md.append(f'| **{category}** | {" ".join(badges)} |\n')
+    md.append('\n---\n\n')
+
+    # Selected Works / Projects
+    md.append('### 📂 /selected-works\n\n')
+    for work in FEATURED_WORKS:
+        name = work.get("name", "Project")
+        url = work.get("url", "#")
+        desc = work.get("desc", "")
+        md.append(f'- [**`{name}`**]({url}) &mdash; {desc}\n')
+    md.append(f'- [**`github.com/{USERNAME}`**](https://github.com/{USERNAME}) &mdash; All open-source repositories & experiments\n\n')
+
+    # Connect Section
+    md.append('---\n\n')
+    md.append('### 🛰️ /telemetry &amp; connect\n\n')
     connects = []
     for s in SOCIALS:
         label = s.get("label", "Link")
         url = s.get("url", "#")
         logo = s.get("logo", "").lower()
         color = s.get("color", "0d1117")
-        
         logo_param = f"&logo={logo}" if logo else ""
         badge = f'[![{label}](https://img.shields.io/badge/{label}-{color}?style=flat-square{logo_param}&logoColor=white)]({url})'
         connects.append(badge)
-        
+
     md.append(" &nbsp; ".join(connects))
     md.append('\n')
-    
+
     with open("README.md", "w", encoding="utf-8") as f:
         f.writelines(md)
-    print("Successfully generated README.md")
+    print("Generated README.md")
+
 
 # -----------------------------------------------------------------------------
-# 3. Generate GitHub Action Workflow
+# 5. Generate GitHub Action Workflow
 # -----------------------------------------------------------------------------
 def generate_workflow():
     workflow_yaml = f'''name: Update Profile Art
-
-# Refreshes the contribution graph SVG daily from real data.
-# Runs daily, plus on-demand.
 
 on:
   schedule:
@@ -282,9 +405,9 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Install dependencies
+      - name: Install dependencies (optional bs4/requests)
         run: |
-          pip install pillow numpy beautifulsoup4 requests
+          pip install beautifulsoup4 requests || true
 
       - name: Render dynamic assets
         run: python make_profile.py
@@ -293,26 +416,27 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "chore: refresh profile art [skip ci]"
-          file_pattern: "assets/contrib-heatmap.svg README.md"
+          file_pattern: "assets/*.svg README.md profile_config.json"
 '''
     workflow_path = os.path.join(".github", "workflows", "update-profile-art.yml")
     with open(workflow_path, "w", encoding="utf-8") as f:
         f.write(workflow_yaml)
-    print(f"Successfully generated GitHub Action Workflow: {workflow_path}")
+    print(f"Generated GitHub Action Workflow: {workflow_path}")
+
 
 # -----------------------------------------------------------------------------
-# Main Execution Flow
+# Main Execution
 # -----------------------------------------------------------------------------
 if __name__ == "__main__":
     print("="*60)
-    print("Generating Editorial Minimalist GitHub Profile README...")
+    print("Rendering Swiss Editorial GitHub Profile Suite...")
     print("="*60)
-    
+
+    generate_header()
     has_contrib = generate_contributions()
     generate_readme(has_contrib)
     generate_workflow()
-    
+
     print("="*60)
-    print("Done! You can commit the files in 'assets/', '.github/' and 'README.md'")
-    print("to your personal GitHub profile repository.")
+    print("Successfully built all assets and README.md!")
     print("="*60)
