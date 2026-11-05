@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="860" height="220" viewBox="0 0 860 220" fill="none">
+  <defs>
+    <linearGradient id="grid-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#30363d" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#161b22" stop-opacity="0.1"/>
+    </linearGradient>
+    <linearGradient id="text-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="70%" stop-color="#f0f6fc"/>
+      <stop offset="100%" stop-color="#8b949e"/>
+    </linearGradient>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&amp;family=Space+Grotesk:wght@500;700;800&amp;display=swap');
+      .title {
+        font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        font-size: 50px;
+        font-weight: 800;
+        letter-spacing: -1.5px;
+        fill: url(#text-grad);
+      }
+      .mono-meta {
+        font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+        font-size: 11px;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+      }
+      .sub {
+        font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+        font-size: 15px;
+        font-weight: 500;
+        fill: #8b949e;
+        letter-spacing: -0.2px;
+      }
+      .status-dot {
+        animation: pulse 2.5s infinite;
+      }
+      @keyframes pulse {
+        0%, 100% { opacity: 1; transform: scale(1); }
+        50% { opacity: 0.45; transform: scale(0.9); }
+      }
+    </style>
+  </defs>
+
+  <!-- Card Background with 1px Swiss Editorial Border -->
+  <rect x="0.5" y="0.5" width="859" height="219" rx="8" fill="#0d1117" stroke="#30363d" stroke-width="1"/>
+  
+  <!-- Subtle Architectural Grid Accent Lines -->
+  <line x1="36" y1="48" x2="824" y2="48" stroke="#21262d" stroke-width="1"/>
+  <line x1="36" y1="176" x2="824" y2="176" stroke="#21262d" stroke-width="1"/>
+  <line x1="610" y1="48" x2="610" y2="176" stroke="#21262d" stroke-width="1" stroke-dasharray="3 3"/>
+
+  <!-- Top Metadata Bar -->
+  <text x="36" y="32" class="mono-meta" fill="#8b949e">INDEX // 001</text>
+  <text x="140" y="32" class="mono-meta" fill="#3fb950">● BUILDING IN 2026</text>
+  <text x="824" y="32" class="mono-meta" fill="#8b949e" text-anchor="end">28.6139° N, 77.2090° E · New Delhi, India</text>
+
+  <!-- Big Hero Wordmark -->
+  <text x="36" y="112" class="title">FLYNN MAXWEL</text>
+  
+  <!-- Subtitle -->
+  <text x="38" y="146" class="sub">Vibecoder · Fullstack & AI Systems Architect</text>
+
+  <!-- Right Telemetry Panel -->
+  <text x="630" y="80" class="mono-meta" fill="#8b949e">ARCHITECTURE</text>
+  <text x="630" y="102" class="mono-meta" fill="#f0f6fc">AUTONOMOUS &amp; DISTRIBUTED</text>
+  
+  <text x="630" y="132" class="mono-meta" fill="#8b949e">FOCUS</text>
+  <text x="630" y="152" class="mono-meta" fill="#388bfd">AI AGENTS &amp; FULL-STACK</text>
+
+  <!-- Bottom Navigation / Metadata Footer -->
+  <text x="36" y="200" class="mono-meta" fill="#484f58">SYSTEM: ONLINE</text>
+  <text x="824" y="200" class="mono-meta" fill="#8b949e" text-anchor="end">SWISS EDITORIAL V2.0 // @flynnmaxweld</text>
+</svg>
