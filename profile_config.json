@@ -1,29 +1,26 @@
 {
   "github_username": "flynnmaxweld",
   "display_name": "Flynn Maxwel D",
-  "brand_name": "FLYNN MAXWEL",
-  "title": "VIBECODER",
+  "brand_name": "Flynn Maxwel",
+  "role": "Vibecoder",
+  "subrole": "Full-Stack Engineer & AI Systems Builder",
   "tagline": "Designing, building, and automating intelligent applications.",
   "location": "Tirunelveli, Tamil Nadu",
-  "coordinates": "8.7139° N, 77.7567° E",
-  "status": "BUILDING IN 2026",
-  "avatar_path": "avatar.png",
-  "skills": {
-    "Core": ["Python", "JavaScript", "TypeScript", "SQL"],
-    "Web": ["React", "Next.js", "Node.js", "FastAPI"],
-    "Systems": ["Docker", "PostgreSQL", "Git", "Linux"],
-    "AI": ["LLMs", "LangChain", "Autonomous Agents"]
-  },
+  "status": "Available for high-impact builds in 2026",
+  "skills": [
+    "Python", "TypeScript", "JavaScript", "React", "Next.js",
+    "Node.js", "FastAPI", "PostgreSQL", "Docker", "Git", "Autonomous Agents"
+  ],
   "featured_works": [
     {
       "name": "flynnmaxweld.github.io",
       "url": "https://flynnmaxweld.github.io",
-      "desc": "Personal digital space & portfolio"
+      "desc": "Personal engineering space, interactive experiments & notes"
     },
     {
-      "name": "Intelligent Agents & Automations",
+      "name": "AI & Autonomous Agents",
       "url": "https://github.com/flynnmaxweld",
-      "desc": "Autonomous pipelines, LLM utilities & systems"
+      "desc": "Intelligent pipelines, agent orchestration & LLM tools"
     }
   ],
   "social_links": [

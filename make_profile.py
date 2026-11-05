@@ -1,11 +1,16 @@
 """
-Generate an Apple-inspired Liquid Glass (Cupertino Midnight Frost) GitHub Profile Suite.
-Aesthetic:
-  - Cupertino Keynote typography: "Flynn Maxwel. Vibecoder." with polished subtitle
-  - Frosted liquid glass pill badges (location, status)
-  - Zero avatar photo inside the README
-  - Liquid Glass Contribution Pod SVG (smooth 20px squircle chassis, glass rim specular gradients, emerald gem tiles)
-  - Bento pods for Tech Stack (macOS icon dock), Selected Works & Connect
+Generate a Single Unified Linear / Vercel Craft Bespoke SVG Component & Clean Markdown.
+Design:
+  - Linear.app & Vercel Design System craft aesthetic
+  - Razor-thin 1px micro-borders (#1e242e / #262c36)
+  - Muted slate-black background (#090c10 to #0d1117)
+  - Crisp typography (-apple-system / Inter / SF Pro)
+  - Seamlessly contains:
+      1. Brand title + Vibecoder pill + Status indicator
+      2. Bio statement
+      3. Live Contribution Heatmap Matrix (Emerald Pulse #10b981 / #34d399)
+      4. Micro-pill tech stack
+  - Output: assets/linear-card.svg
 """
 import os
 import json
@@ -27,12 +32,13 @@ with open(CONFIG_PATH, "r", encoding="utf-8") as f:
     config = json.load(f)
 
 USERNAME = config.get("github_username", "flynnmaxweld")
-BRAND_NAME = config.get("brand_name", "FLYNN MAXWEL")
-TITLE = config.get("title", "Vibecoder")
-TAGLINE = config.get("tagline", "Designing, building, and automating intelligent applications.")
-LOCATION = config.get("location", "Tirunelveli, Tamil Nadu")
-COORDINATES = config.get("coordinates", "8.7139° N, 77.7567° E")
-STATUS = config.get("status", "BUILDING IN 2026")
+NAME = html.escape(config.get("brand_name", "Flynn Maxwel"))
+ROLE = html.escape(config.get("role", "Vibecoder"))
+SUBROLE = html.escape(config.get("subrole", "Full-Stack Engineer & AI Systems Builder"))
+TAGLINE = html.escape(config.get("tagline", "Designing, building, and automating intelligent applications."))
+LOCATION = html.escape(config.get("location", "Tirunelveli, Tamil Nadu"))
+STATUS = html.escape(config.get("status", "Available for high-impact builds in 2026"))
+SKILLS = config.get("skills", [])
 FEATURED_WORKS = config.get("featured_works", [])
 SOCIALS = config.get("social_links", [])
 
@@ -92,16 +98,13 @@ def fetch_contributions_data():
 
 
 # -----------------------------------------------------------------------------
-# 2. Apple Liquid Glass Contribution Pod SVG
+# 2. Build Unified Linear / Vercel Craft SVG Component
 # -----------------------------------------------------------------------------
-def generate_liquid_glass_heatmap():
+def generate_linear_unified_card():
     raw_days = fetch_contributions_data()
-    out_path = os.path.join("assets", "contrib-heatmap.svg")
-    
+    out_path = os.path.join("assets", "linear-card.svg")
+
     if not raw_days:
-        if os.path.exists(out_path):
-            print("Preserving existing contrib-heatmap.svg.")
-            return True
         today = datetime.date.today()
         raw_days = []
         for i in range(120):
@@ -125,17 +128,16 @@ def generate_liquid_glass_heatmap():
     if not contribs:
         contribs = raw_days
 
-    CELL, GAP, RAD, LEFT, TOP = 12, 3.5, 3.5, 42, 42
-    # Apple Midnight Gem Palette
-    COLORS = ["#1b212b", "#0f4028", "#176e3c", "#28a745", "#3de062"]
-    GRAY = "#86868b"
+    W = 860
+    # Activity Matrix dimensions
+    CELL, GAP, RAD = 11.5, 3.5, 2.5
+    LEFT, TOP = 44, 156
+    COLORS = ["#13171f", "#064e3b", "#047857", "#10b981", "#34d399"]
+    GRAY = "#6e7681"
     MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
 
     n = len(contribs)
     NW = (n + 6) // 7
-    W = 860
-    H = 188
-
     active_days = sum(1 for c in contribs if c["level"] > 0)
 
     labels = []
@@ -147,12 +149,12 @@ def generate_liquid_glass_heatmap():
         d = sd + datetime.timedelta(days=wk * 7)
         if d.month != last_m:
             last_m = d.month
-            labels.append(f'<text class="lbl" x="{LEFT+wk*(CELL+GAP)}" y="{TOP-12}">{MONTHS[d.month-1]}</text>')
+            labels.append(f'<text class="month-lbl" x="{LEFT+wk*(CELL+GAP)}" y="{TOP-8}">{MONTHS[d.month-1]}</text>')
 
-    for name, r in [("Mon", 1), ("Wed", 3), ("Fri", 5)]:
-        labels.append(f'<text class="lbl" x="12" y="{TOP+r*(CELL+GAP)+CELL-3}">{name}</text>')
+    for name, r in [("M", 1), ("W", 3), ("F", 5)]:
+        labels.append(f'<text class="day-lbl" x="22" y="{TOP+r*(CELL+GAP)+CELL-3}">{name}</text>')
 
-    REVEAL, DUR = 2.4, 0.45
+    REVEAL, DUR = 2.4, 0.4
     maxorder = (NW - 1) + 6 * 0.55
 
     for i, c in enumerate(contribs):
@@ -163,148 +165,199 @@ def generate_liquid_glass_heatmap():
         cls = "c g" if lvl >= 1 else "c e"
         rects.append(
             f'<rect class="{cls}" x="{x}" y="{y}" width="{CELL}" height="{CELL}" rx="{RAD}" '
-            f'fill="{COLORS[lvl]}" stroke="#2d3440" stroke-width="0.5" style="animation-delay:{delay}s"/>'
+            f'fill="{COLORS[lvl]}" stroke="#1b2028" stroke-width="0.5" style="animation-delay:{delay}s"/>'
         )
+
+    # Stack Micro-pills inside the card footer
+    stack_y = TOP + 7 * (CELL + GAP) + 38
+    pill_elements = []
+    cur_x = 44
+    for skill in SKILLS:
+        skill_text = html.escape(skill)
+        pill_width = len(skill) * 7.5 + 20
+        pill_elements.append(
+            f'<g transform="translate({cur_x}, {stack_y})">'
+            f'<rect width="{pill_width}" height="22" rx="11" fill="#161b22" stroke="#262c36" stroke-width="0.75"/>'
+            f'<text x="{pill_width/2}" y="14" class="pill-text" text-anchor="middle">{skill_text}</text>'
+            f'</g>'
+        )
+        cur_x += pill_width + 8
+
+    H = stack_y + 36
 
     svg = f'''<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}" fill="none">
   <defs>
-    <!-- Liquid Glass Surface Gradient -->
-    <linearGradient id="glass-body" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#161b22" stop-opacity="0.85"/>
-      <stop offset="100%" stop-color="#0d1117" stop-opacity="0.95"/>
-    </linearGradient>
+    <!-- Linear Subtle Glow & Vignette -->
+    <radialGradient id="linear-glow" cx="15%" cy="0%" r="65%">
+      <stop offset="0%" stop-color="#1f2937" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#090c10" stop-opacity="1"/>
+    </radialGradient>
 
-    <!-- Specular Frosted Glass Rim -->
-    <linearGradient id="glass-rim" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#8b949e" stop-opacity="0.45"/>
-      <stop offset="40%" stop-color="#30363d" stop-opacity="0.25"/>
-      <stop offset="100%" stop-color="#161b22" stop-opacity="0.1"/>
-    </linearGradient>
-
-    <!-- Top Gloss Sheen -->
+    <!-- Linear Specular Top Border Sheen -->
     <linearGradient id="top-sheen" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#ffffff" stop-opacity="0"/>
-      <stop offset="50%" stop-color="#ffffff" stop-opacity="0.12"/>
-      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+      <stop offset="0%" stop-color="#30363d" stop-opacity="0"/>
+      <stop offset="30%" stop-color="#3b82f6" stop-opacity="0.5"/>
+      <stop offset="50%" stop-color="#10b981" stop-opacity="0.8"/>
+      <stop offset="70%" stop-color="#3b82f6" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#30363d" stop-opacity="0"/>
     </linearGradient>
 
     <style>
-      text.lbl {{ fill:{GRAY}; font-size:10px; font-weight:500; font-family:-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', sans-serif; }}
-      text.pod-title {{ fill:#f5f5f7; font-size:11px; font-weight:600; font-family:-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif; letter-spacing:0.5px; }}
-      text.pod-sub {{ fill:#86868b; font-size:10px; font-weight:500; font-family:-apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif; }}
+      .hero-name {{
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
+        font-size: 24px;
+        font-weight: 700;
+        fill: #f0f6fc;
+        letter-spacing: -0.6px;
+      }}
+      .role-pill-text {{
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+        font-size: 11px;
+        font-weight: 600;
+        fill: #34d399;
+        letter-spacing: 0.3px;
+      }}
+      .meta-label {{
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        font-size: 11px;
+        font-weight: 500;
+        fill: #7d8590;
+      }}
+      .bio-text {{
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
+        font-size: 13.5px;
+        font-weight: 400;
+        fill: #9ca3af;
+      }}
+      .section-hdr {{
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+        font-size: 11px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        fill: #6e7681;
+      }}
+      .month-lbl {{
+        font-family: ui-monospace, SFMono-Regular, monospace;
+        font-size: 9.5px;
+        font-weight: 500;
+        fill: #6e7681;
+      }}
+      .day-lbl {{
+        font-family: ui-monospace, SFMono-Regular, monospace;
+        font-size: 9px;
+        font-weight: 500;
+        fill: #4b5563;
+      }}
+      .pill-text {{
+        font-family: ui-monospace, SFMono-Regular, monospace;
+        font-size: 10px;
+        font-weight: 500;
+        fill: #c9d1d9;
+      }}
       .c {{ transform-box:fill-box; transform-origin:center; opacity:0; animation:pop {DUR}s ease-out both; }}
       .g {{ animation:pop {DUR}s ease-out both, flash {DUR+0.15}s ease-out both; }}
-      @keyframes pop {{ 0%{{opacity:0;transform:scale(.2)}} 60%{{opacity:1;transform:scale(1.05)}} 100%{{opacity:1;transform:scale(1)}} }}
-      @keyframes flash {{ 0%{{filter:brightness(2.2)}} 50%{{filter:brightness(2.2)}} 100%{{filter:brightness(1)}} }}
+      @keyframes pop {{ 0%{{opacity:0;transform:scale(.2)}} 60%{{opacity:1;transform:scale(1.04)}} 100%{{opacity:1;transform:scale(1)}} }}
+      @keyframes flash {{ 0%{{filter:brightness(2)}} 50%{{filter:brightness(2)}} 100%{{filter:brightness(1)}} }}
       @media (prefers-reduced-motion: reduce) {{ .c {{ opacity:1 !important; animation:none !important; }} }}
     </style>
   </defs>
 
-  <!-- Cupertino Liquid Glass Chassis (20px squircle) -->
-  <rect x="0.5" y="0.5" width="{W-1}" height="{H-1}" rx="20" fill="url(#glass-body)" stroke="url(#glass-rim)" stroke-width="1"/>
+  <!-- Card Chassis with 1px Precision Border -->
+  <rect x="0.5" y="0.5" width="{W-1}" height="{H-1}" rx="12" fill="url(#linear-glow)" stroke="#21262d" stroke-width="1"/>
   
-  <!-- Subtle Top Specular Glass Sheen Highlight -->
-  <rect x="20" y="1" width="{W-40}" height="1" fill="url(#top-sheen)"/>
+  <!-- Razor 1px Top Sheen Accent Line -->
+  <line x1="12" y1="1" x2="{W-12}" y2="1" stroke="url(#top-sheen)" stroke-width="1"/>
 
-  <!-- Top Glass Header -->
-  <text x="24" y="24" class="pod-title">Telemetry &amp; Contributions</text>
-  <text x="{W-24}" y="24" class="pod-sub" text-anchor="end"><tspan fill="#34c759">&#x25CF;</tspan> {active_days} Active Days in 2026</text>
+  <!-- Top Hero Header Row -->
+  <!-- Name -->
+  <text x="44" y="44" class="hero-name">{NAME}</text>
+  
+  <!-- Vibecoder Badge -->
+  <g transform="translate(196, 28)">
+    <rect width="84" height="22" rx="11" fill="#064e3b" fill-opacity="0.3" stroke="#047857" stroke-width="0.75"/>
+    <text x="42" y="15" class="role-pill-text" text-anchor="middle">{ROLE}</text>
+  </g>
 
-  <!-- Activity Grid -->
+  <!-- Location & Status (Right Aligned) -->
+  <text x="{W-44}" y="36" class="meta-label" text-anchor="end">{LOCATION}</text>
+  <text x="{W-44}" y="52" class="meta-label" text-anchor="end"><tspan fill="#10b981">&#x25CF;</tspan> {active_days} active days in 2026</text>
+
+  <!-- Bio Sentence -->
+  <text x="44" y="74" class="bio-text">{TAGLINE}</text>
+  <text x="44" y="93" class="meta-label" fill="#6e7681">{SUBROLE}</text>
+
+  <!-- Divider Line -->
+  <line x1="44" y1="114" x2="{W-44}" y2="114" stroke="#1f2937" stroke-width="0.75"/>
+
+  <!-- Activity Section Header -->
+  <text x="44" y="136" class="section-hdr">ENGINEERING ACTIVITY</text>
+
+  <!-- Heatmap Grid -->
   {"".join(labels)}
   {"".join(rects)}
 
   <!-- Legend -->
-  <g transform="translate({W-140}, {H-18})">
-    <text class="lbl" x="-28" y="9">Less</text>
-    <rect x="0" y="0" width="10" height="10" rx="2.5" fill="{COLORS[0]}" stroke="#2d3440" stroke-width="0.5"/>
-    <rect x="14" y="0" width="10" height="10" rx="2.5" fill="{COLORS[1]}"/>
-    <rect x="28" y="0" width="10" height="10" rx="2.5" fill="{COLORS[2]}"/>
-    <rect x="42" y="0" width="10" height="10" rx="2.5" fill="{COLORS[3]}"/>
-    <rect x="56" y="0" width="10" height="10" rx="2.5" fill="{COLORS[4]}"/>
-    <text class="lbl" x="72" y="9">More</text>
+  <g transform="translate({W-144}, {TOP + 7 * (CELL + GAP) + 10})">
+    <text class="month-lbl" x="-26" y="8">Less</text>
+    <rect x="0" y="0" width="9" height="9" rx="2" fill="{COLORS[0]}" stroke="#1b2028" stroke-width="0.5"/>
+    <rect x="13" y="0" width="9" height="9" rx="2" fill="{COLORS[1]}"/>
+    <rect x="26" y="0" width="9" height="9" rx="2" fill="{COLORS[2]}"/>
+    <rect x="39" y="0" width="9" height="9" rx="2" fill="{COLORS[3]}"/>
+    <rect x="52" y="0" width="9" height="9" rx="2" fill="{COLORS[4]}"/>
+    <text class="month-lbl" x="68" y="8">More</text>
   </g>
+
+  <!-- Stack Section Header -->
+  <text x="44" y="{stack_y - 12}" class="section-hdr">SYSTEMS &amp; CRAFT</text>
+
+  <!-- Micro-pills -->
+  {"".join(pill_elements)}
 </svg>'''
 
     ET.fromstring(svg)
 
     with open(out_path, "w", encoding="utf-8") as f:
         f.write(svg)
-    print(f"Generated Liquid Glass Contribution Pod: {out_path}")
-    return True
+    print(f"Generated Linear Unified Craft Card: {out_path}")
 
 
 # -----------------------------------------------------------------------------
-# 3. Generate Apple Liquid Glass README.md
+# 3. Clean Linear-style Markdown Layout (README.md)
 # -----------------------------------------------------------------------------
-def generate_apple_readme():
+def generate_linear_readme():
     md = []
 
-    # ==================== APPLE KEYNOTE HEADLINE (NO AVATAR) ====================
-    md.append('<div align="center">\n\n')
-    md.append('# Flynn Maxwel. Vibecoder.\n\n')
-    md.append(f'### *"{TAGLINE}"*\n\n')
-    md.append(f'`📍 {LOCATION}` &nbsp;&bull;&nbsp; `⚡ {STATUS}` &nbsp;&bull;&nbsp; `🛰️ {COORDINATES}`\n\n')
-    md.append('</div>\n\n')
-
-    md.append('<br/>\n\n')
-
-    # ==================== LIQUID GLASS HEATMAP POD ====================
+    # Single Unified Linear Card Component
     md.append('<div align="center">\n')
-    md.append('  <img src="./assets/contrib-heatmap.svg" width="860" alt="Contribution Pod" />\n')
+    md.append('  <a href="https://flynnmaxweld.github.io">\n')
+    md.append('    <img src="./assets/linear-card.svg" width="860" alt="Flynn Maxwel — Vibecoder" />\n')
+    md.append('  </a>\n')
     md.append('</div>\n\n')
 
-    md.append('<br/>\n\n')
-
-    # ==================== APPLE BENTO PODS ====================
-    md.append('<table>\n')
-    md.append('  <tr>\n')
-
-    # Left Pod: macOS Developer Dock & Architecture
-    md.append('    <td width="50%" valign="top">\n')
-    md.append('      <h3>🛠️ Architecture &amp; Stack</h3>\n')
-    md.append('      <p>\n')
-    md.append('        <a href="https://skillicons.dev">\n')
-    md.append('          <img src="https://skillicons.dev/icons?i=python,js,ts,react,nextjs,nodejs,fastapi,postgres,docker,git,linux&perline=6" alt="Developer Stack" />\n')
-    md.append('        </a>\n')
-    md.append('      </p>\n')
-    md.append('      <ul>\n')
-    md.append('        <li><b>Languages:</b> Python, TypeScript, JavaScript, SQL</li>\n')
-    md.append('        <li><b>Web &amp; Core:</b> React, Next.js, Node.js, FastAPI</li>\n')
-    md.append('        <li><b>Platforms:</b> Docker, PostgreSQL, Linux, Git</li>\n')
-    md.append('        <li><b>Intelligence:</b> Autonomous Agents, LLM Pipelines</li>\n')
-    md.append('      </ul>\n')
-    md.append('    </td>\n')
-
-    # Right Pod: Selected Works & Connect
-    md.append('    <td width="50%" valign="top">\n')
-    md.append('      <h3>📂 Featured Works</h3>\n')
-    md.append('      <ul>\n')
+    # Selected Works Section (Linear Clean List)
+    md.append('### Deployments\n\n')
     for work in FEATURED_WORKS:
         name = work.get("name", "Project")
         url = work.get("url", "#")
         desc = work.get("desc", "")
-        md.append(f'        <li><a href="{url}"><b><code>{name}</code></b></a><br/>{desc}</li>\n')
-    md.append(f'        <li><a href="https://github.com/{USERNAME}"><b><code>github.com/{USERNAME}</code></b></a><br/>Open-source projects &amp; experiments</li>\n')
-    md.append('      </ul>\n')
-    md.append('      <hr/>\n')
-    md.append('      <h3>🔗 Connect</h3>\n')
-    md.append('      <p>\n')
-    connects = []
+        md.append(f'- [**`{name}`**]({url}) &mdash; {desc}\n')
+    md.append(f'- [**`github.com/{USERNAME}`**](https://github.com/{USERNAME}) &mdash; Open source codebases &amp; experiments\n\n')
+
+    md.append('---\n\n')
+
+    # Connect Section
+    md.append('### Connect\n\n')
+    links = []
     for s in SOCIALS:
         label = s.get("label", "Link")
         url = s.get("url", "#")
-        connects.append(f'<a href="{url}"><b><code>{label}</code></b></a>')
-    md.append(' &nbsp;&bull;&nbsp; '.join(connects) + '\n')
-    md.append('      </p>\n')
-    md.append('    </td>\n')
-
-    md.append('  </tr>\n')
-    md.append('</table>\n')
+        links.append(f'- [{label}]({url})')
+    md.append('\n'.join(links) + '\n')
 
     with open("README.md", "w", encoding="utf-8") as f:
         f.writelines(md)
-    print("Generated Apple Liquid Glass README.md")
+    print("Generated Clean Linear README.md")
 
 
 # -----------------------------------------------------------------------------
@@ -357,11 +410,11 @@ jobs:
 # -----------------------------------------------------------------------------
 if __name__ == "__main__":
     print("="*60)
-    print("Rendering Apple Liquid Glass Profile Suite...")
+    print("Rendering Linear / Vercel Craft Profile Suite...")
     print("="*60)
 
-    generate_liquid_glass_heatmap()
-    generate_apple_readme()
+    generate_linear_unified_card()
+    generate_linear_readme()
     generate_workflow()
 
     print("="*60)
