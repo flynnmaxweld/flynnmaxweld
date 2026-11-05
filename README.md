@@ -4,7 +4,7 @@
 
 <div align="center">
 
-*Designing, building, and automating intelligent applications from Tirunelveli, Tamil Nadu.*
+*Designing, building, and automating intelligent applications*
 
 </div>
 
