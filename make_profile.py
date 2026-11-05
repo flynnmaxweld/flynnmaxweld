@@ -11,7 +11,9 @@ import json
 import urllib.request
 import re
 import datetime
+import html
 from html.parser import HTMLParser
+import xml.etree.ElementTree as ET
 
 # Ensure directories exist
 os.makedirs("assets", exist_ok=True)
@@ -26,12 +28,12 @@ with open(CONFIG_PATH, "r", encoding="utf-8") as f:
     config = json.load(f)
 
 USERNAME = config.get("github_username", "flynnmaxweld")
-BRAND_NAME = config.get("brand_name", "FLYNN MAXWEL")
-TITLE = config.get("title", "Vibecoder · Fullstack & AI Systems Architect")
+BRAND_NAME = html.escape(config.get("brand_name", "FLYNN MAXWEL"))
+TITLE = html.escape(config.get("title", "Vibecoder · Fullstack & AI Systems Architect"))
 TAGLINE = config.get("tagline", "Designing, building, and automating intelligent applications from New Delhi, India.")
-COORDINATES = config.get("coordinates", "28.6139° N, 77.2090° E")
-LOCATION = config.get("location", "New Delhi, IN")
-STATUS = config.get("status", "BUILDING IN 2026")
+COORDINATES = html.escape(config.get("coordinates", "28.6139° N, 77.2090° E"))
+LOCATION = html.escape(config.get("location", "New Delhi, IN"))
+STATUS = html.escape(config.get("status", "BUILDING IN 2026"))
 SKILLS = config.get("skills", {})
 FEATURED_WORKS = config.get("featured_works", [])
 SOCIALS = config.get("social_links", [])
@@ -44,43 +46,32 @@ def generate_header():
     
     svg = f'''<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}" fill="none">
   <defs>
-    <linearGradient id="grid-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#30363d" stop-opacity="0.35"/>
-      <stop offset="100%" stop-color="#161b22" stop-opacity="0.1"/>
-    </linearGradient>
     <linearGradient id="text-grad" x1="0%" y1="0%" x2="100%" y2="0%">
       <stop offset="0%" stop-color="#ffffff"/>
       <stop offset="70%" stop-color="#f0f6fc"/>
       <stop offset="100%" stop-color="#8b949e"/>
     </linearGradient>
     <style>
-      @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&amp;family=Space+Grotesk:wght@500;700;800&amp;display=swap');
       .title {{
-        font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-        font-size: 50px;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        font-size: 46px;
         font-weight: 800;
         letter-spacing: -1.5px;
         fill: url(#text-grad);
       }}
       .mono-meta {{
-        font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+        font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
         font-size: 11px;
+        font-weight: 600;
         letter-spacing: 1.5px;
         text-transform: uppercase;
       }}
       .sub {{
-        font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
         font-size: 15px;
         font-weight: 500;
         fill: #8b949e;
         letter-spacing: -0.2px;
-      }}
-      .status-dot {{
-        animation: pulse 2.5s infinite;
-      }}
-      @keyframes pulse {{
-        0%, 100% {{ opacity: 1; transform: scale(1); }}
-        50% {{ opacity: 0.45; transform: scale(0.9); }}
       }}
     </style>
   </defs>
@@ -91,12 +82,12 @@ def generate_header():
   <!-- Subtle Architectural Grid Accent Lines -->
   <line x1="36" y1="48" x2="{W-36}" y2="48" stroke="#21262d" stroke-width="1"/>
   <line x1="36" y1="{H-44}" x2="{W-36}" y2="{H-44}" stroke="#21262d" stroke-width="1"/>
-  <line x1="610" y1="48" x2="610" y2="{H-44}" stroke="#21262d" stroke-width="1" stroke-dasharray="3 3"/>
+  <line x1="600" y1="48" x2="600" y2="{H-44}" stroke="#21262d" stroke-width="1" stroke-dasharray="3 3"/>
 
   <!-- Top Metadata Bar -->
   <text x="36" y="32" class="mono-meta" fill="#8b949e">INDEX // 001</text>
-  <text x="140" y="32" class="mono-meta" fill="#3fb950">● {STATUS}</text>
-  <text x="{W-36}" y="32" class="mono-meta" fill="#8b949e" text-anchor="end">{COORDINATES} · {LOCATION}</text>
+  <text x="140" y="32" class="mono-meta" fill="#3fb950">&#x25CF; {STATUS}</text>
+  <text x="{W-36}" y="32" class="mono-meta" fill="#8b949e" text-anchor="end">{COORDINATES} &#183; {LOCATION}</text>
 
   <!-- Big Hero Wordmark -->
   <text x="36" y="112" class="title">{BRAND_NAME}</text>
@@ -105,21 +96,24 @@ def generate_header():
   <text x="38" y="146" class="sub">{TITLE}</text>
 
   <!-- Right Telemetry Panel -->
-  <text x="630" y="80" class="mono-meta" fill="#8b949e">ARCHITECTURE</text>
-  <text x="630" y="102" class="mono-meta" fill="#f0f6fc">AUTONOMOUS &amp; DISTRIBUTED</text>
+  <text x="620" y="80" class="mono-meta" fill="#8b949e">ARCHITECTURE</text>
+  <text x="620" y="102" class="mono-meta" fill="#f0f6fc">AUTONOMOUS &amp; DISTRIBUTED</text>
   
-  <text x="630" y="132" class="mono-meta" fill="#8b949e">FOCUS</text>
-  <text x="630" y="152" class="mono-meta" fill="#388bfd">AI AGENTS &amp; FULL-STACK</text>
+  <text x="620" y="132" class="mono-meta" fill="#8b949e">FOCUS</text>
+  <text x="620" y="152" class="mono-meta" fill="#388bfd">AI AGENTS &amp; FULL-STACK</text>
 
   <!-- Bottom Navigation / Metadata Footer -->
   <text x="36" y="{H-20}" class="mono-meta" fill="#484f58">SYSTEM: ONLINE</text>
   <text x="{W-36}" y="{H-20}" class="mono-meta" fill="#8b949e" text-anchor="end">SWISS EDITORIAL V2.0 // @{USERNAME}</text>
 </svg>'''
 
+    # Strict XML validation
+    ET.fromstring(svg)
+
     out_path = os.path.join("assets", "header.svg")
     with open(out_path, "w", encoding="utf-8") as f:
         f.write(svg)
-    print(f"Generated Editorial Header Banner: {out_path}")
+    print(f"Generated & Validated Editorial Header Banner: {out_path}")
 
 
 # -----------------------------------------------------------------------------
@@ -151,7 +145,6 @@ def fetch_contributions_data():
         print(f"Warning: Could not fetch live contributions: {e}")
         return None
 
-    # Try bs4 if available, otherwise use native HTMLParser
     raw_days = []
     try:
         from bs4 import BeautifulSoup
@@ -188,7 +181,6 @@ def generate_contributions():
         if os.path.exists(out_path):
             print("Preserving existing contrib-heatmap.svg.")
             return True
-        print("No contribution data found. Generating placeholder calendar.")
         today = datetime.date.today()
         raw_days = []
         for i in range(120):
@@ -238,7 +230,7 @@ def generate_contributions():
     for name, r in [("Mon", 1), ("Wed", 3), ("Fri", 5)]:
         labels.append(f'<text class="lbl" x="6" y="{TOP+r*(CELL+GAP)+CELL-3}">{name}</text>')
 
-    REVEAL, DUR = 3.0, 0.45
+    REVEAL, DUR = 2.8, 0.45
     maxorder = (NW - 1) + 6 * 0.55
 
     for i, c in enumerate(contribs):
@@ -252,12 +244,14 @@ def generate_contributions():
             f'fill="{COLORS[lvl]}" stroke="#30363d" stroke-width="0.5" style="animation-delay:{delay}s"/>'
         )
 
+    start_date = contribs[0]["date"]
+    end_date = contribs[-1]["date"]
+
     svg = f'''<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}" fill="none">
   <defs>
     <style>
-      @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&amp;display=swap');
-      text.lbl {{ fill:{GRAY}; font-size:11px; font-weight:500; font-family:'JetBrains Mono', monospace; }}
-      text.meta {{ fill:#8b949e; font-size:11px; font-family:'JetBrains Mono', monospace; letter-spacing:1px; }}
+      text.lbl {{ fill:{GRAY}; font-size:11px; font-weight:500; font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }}
+      text.meta {{ fill:#8b949e; font-size:11px; font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; letter-spacing:1px; }}
       text.strong {{ fill:#f0f6fc; font-weight:600; }}
       .c {{ transform-box:fill-box; transform-origin:center; opacity:0; animation:pop {DUR}s ease-out both; }}
       .g {{ animation:pop {DUR}s ease-out both, flash {DUR+0.15}s ease-out both; }}
@@ -270,7 +264,7 @@ def generate_contributions():
   <rect x="0.5" y="0.5" width="{W-1}" height="{H-1}" rx="8" fill="#0d1117" stroke="#30363d" stroke-width="1"/>
 
   <text x="24" y="24" class="meta">ACTIVITY STREAM // LIVE CONTRIBUTION TELEMETRY</text>
-  <text x="{W-24}" y="24" class="meta" text-anchor="end"><tspan fill="#39d353">●</tspan> ACTIVE DAYS: <tspan class="strong">{active_days}</tspan></text>
+  <text x="{W-24}" y="24" class="meta" text-anchor="end"><tspan fill="#39d353">&#x25CF;</tspan> ACTIVE DAYS: <tspan class="strong">{active_days}</tspan></text>
 
   {"".join(labels)}
   {"".join(rects)}
@@ -284,12 +278,15 @@ def generate_contributions():
     <rect x="56" y="0" width="10" height="10" rx="2" fill="{COLORS[4]}"/>
     <text class="lbl" x="72" y="9">More</text>
   </g>
-  <text x="24" y="{H-10}" class="meta">TIMELINE: <tspan class="strong">{contribs[0]["date"]} &rarr; {contribs[-1]["date"]}</tspan></text>
+  <text x="24" y="{H-10}" class="meta">TIMELINE: <tspan class="strong">{start_date} &#8594; {end_date}</tspan></text>
 </svg>'''
+
+    # Strict XML validation
+    ET.fromstring(svg)
 
     with open(out_path, "w", encoding="utf-8") as f:
         f.write(svg)
-    print(f"Generated Contributions Heatmap: {out_path}")
+    print(f"Generated & Validated Contributions Heatmap: {out_path}")
     return True
 
 
@@ -302,7 +299,7 @@ def generate_readme(has_contrib):
     # Dynamic Editorial Hero Banner
     md.append('<div align="center">\n')
     md.append('  <a href="https://flynnmaxweld.github.io">\n')
-    md.append('    <img src="./assets/header.svg" width="100%" alt="Flynn Maxwel — Vibecoder &amp; AI Systems Architect" />\n')
+    md.append('    <img src="./assets/header.svg" width="860" alt="Flynn Maxwel — Vibecoder &amp; AI Systems Architect" />\n')
     md.append('  </a>\n')
     md.append('</div>\n\n')
 
@@ -312,7 +309,7 @@ def generate_readme(has_contrib):
     # Dynamic Heatmap Graph
     if has_contrib:
         md.append('<div align="center">\n')
-        md.append('  <img src="./assets/contrib-heatmap.svg" width="100%" alt="Flynn Maxwel Contribution Telemetry" />\n')
+        md.append('  <img src="./assets/contrib-heatmap.svg" width="860" alt="Flynn Maxwel Contribution Telemetry" />\n')
         md.append('</div>\n\n')
 
     md.append('---\n\n')

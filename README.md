@@ -1,13 +1,13 @@
 <div align="center">
   <a href="https://flynnmaxweld.github.io">
-    <img src="./assets/header.svg" width="100%" alt="Flynn Maxwel — Vibecoder &amp; AI Systems Architect" />
+    <img src="./assets/header.svg" width="860" alt="Flynn Maxwel — Vibecoder &amp; AI Systems Architect" />
   </a>
 </div>
 
 > **"Designing, building, and automating intelligent applications from New Delhi, India."**
 
 <div align="center">
-  <img src="./assets/contrib-heatmap.svg" width="100%" alt="Flynn Maxwel Contribution Telemetry" />
+  <img src="./assets/contrib-heatmap.svg" width="860" alt="Flynn Maxwel Contribution Telemetry" />
 </div>
 
 ---
