@@ -1,47 +1,42 @@
 {
   "github_username": "flynnmaxweld",
-  "brand_name": "FLYNN MAXWEL",
-  "alias": "YOUR FRIENDLY NEIGHBORHOOD VIBECODER",
-  "tagline": "Designing, building, and automating intelligent applications from Tirunelveli, Tamil Nadu.",
-  "location": "Tirunelveli, Tamil Nadu",
-  "coordinates": "8.7139° N, 77.7567° E",
-  "status": "PATROLLING & BUILDING // 2026",
+  "name": "Flynn Maxwel",
+  "title": "Vibecoder",
+  "subtitle": "Full-Stack Engineer & AI Systems Researcher",
+  "about": "Building intelligent systems, autonomous agent workflows, and resilient web applications.",
   "skills": {
     "Languages": ["Python", "TypeScript", "JavaScript", "SQL"],
-    "Frameworks & Web": ["React", "Next.js", "Node.js", "FastAPI"],
-    "Systems & Cloud": ["Docker", "PostgreSQL", "Git", "Linux"],
-    "AI Lab & Agents": ["Autonomous Agents", "LLM Pipelines", "Workflow Automation"]
+    "Web & APIs": ["React", "Next.js", "Node.js", "FastAPI"],
+    "Systems": ["Docker", "PostgreSQL", "Git", "Linux"],
+    "AI & Intelligence": ["Autonomous Agents", "LLM Pipelines", "Workflow Systems"]
   },
   "featured_works": [
     {
       "name": "flynnmaxweld.github.io",
       "url": "https://flynnmaxweld.github.io",
-      "desc": "Personal lab, interactive experiments & indie notes"
+      "desc": "Personal research lab, interactive experiments & notes"
     },
     {
       "name": "Autonomous Agent Pipelines",
       "url": "https://github.com/flynnmaxweld",
-      "desc": "Intelligent automated systems, agent swarms & fullstack utilities"
+      "desc": "Intelligent automated workflows, multi-agent frameworks & tools"
     }
   ],
   "social_links": [
     {
       "label": "Web Hub",
       "value": "flynnmaxweld.github.io",
-      "url": "https://flynnmaxweld.github.io",
-      "badge": "https://img.shields.io/badge/Web_Hub-161b22?style=for-the-badge&logo=googlechrome&logoColor=white"
+      "url": "https://flynnmaxweld.github.io"
     },
     {
       "label": "LinkedIn",
       "value": "flynnmaxwel",
-      "url": "https://linkedin.com/in/flynnmaxwel",
-      "badge": "https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white"
+      "url": "https://linkedin.com/in/flynnmaxwel"
     },
     {
-      "label": "Radio Freq",
+      "label": "Email",
       "value": "flynnmaxweld@gmail.com",
-      "url": "mailto:flynnmaxweld@gmail.com",
-      "badge": "https://img.shields.io/badge/Radio_Freq-EA4335?style=for-the-badge&logo=gmail&logoColor=white"
+      "url": "mailto:flynnmaxweld@gmail.com"
     }
   ]
 }

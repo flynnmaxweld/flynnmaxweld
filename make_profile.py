@@ -1,10 +1,11 @@
 """
-Generate Friendly Neighborhood Vibecoder (Peter Parker Indie Hacker) Suite.
-Features:
-  - Subtle spider-web wireline geometry and Peter Parker lab notebook aesthetic
-  - Custom Parker Lab Header SVG (assets/parker-header.svg)
-  - Subtle web-green / crimson spider accent activity heatmap (assets/contrib-heatmap.svg)
-  - Clean indie hacker sticker matrix for stack & lab experiments
+Generate Peter Parker-Inspired Science/Engineering Lab Notebook Profile Suite.
+Aesthetic & Tone:
+  - Peter Parker the Midtown Science / MIT engineering nerd (Zero Spider-Man puns, zero superhero tropes)
+  - Graph paper technical grid lines (dark engineering blue/slate #0d121c)
+  - Drafting technical margins, index stamps, precision calipers, ink blue & amber telemetry
+  - Header: assets/notebook-header.svg
+  - Activity Grid: assets/contrib-heatmap.svg on dark graph paper grid
 """
 import os
 import json
@@ -26,12 +27,10 @@ with open(CONFIG_PATH, "r", encoding="utf-8") as f:
     config = json.load(f)
 
 USERNAME = config.get("github_username", "flynnmaxweld")
-BRAND_NAME = html.escape(config.get("brand_name", "FLYNN MAXWEL"))
-ALIAS = html.escape(config.get("alias", "YOUR FRIENDLY NEIGHBORHOOD VIBECODER"))
-TAGLINE = html.escape(config.get("tagline", "Designing, building, and automating intelligent applications from Tirunelveli, Tamil Nadu."))
-LOCATION = html.escape(config.get("location", "Tirunelveli, Tamil Nadu"))
-COORDINATES = html.escape(config.get("coordinates", "8.7139° N, 77.7567° E"))
-STATUS = html.escape(config.get("status", "PATROLLING & BUILDING // 2026"))
+NAME = html.escape(config.get("name", "Flynn Maxwel"))
+TITLE = html.escape(config.get("title", "Vibecoder"))
+SUBTITLE = html.escape(config.get("subtitle", "Full-Stack Engineer & AI Systems Researcher"))
+ABOUT = html.escape(config.get("about", "Building intelligent systems, autonomous agent workflows, and resilient web applications."))
 SKILLS = config.get("skills", {})
 FEATURED_WORKS = config.get("featured_works", [])
 SOCIALS = config.get("social_links", [])
@@ -92,103 +91,106 @@ def fetch_contributions_data():
 
 
 # -----------------------------------------------------------------------------
-# 2. Peter Parker Lab Header SVG (Subtle Web-line geometry & Indie Badge)
+# 2. Engineering Lab Notebook Header SVG (Technical Graph Paper / Blueprint)
 # -----------------------------------------------------------------------------
-def generate_parker_header():
-    W, H = 860, 200
+def generate_notebook_header():
+    W, H = 860, 180
 
     svg = f'''<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}" fill="none">
   <defs>
-    <!-- Dark Lab Background -->
-    <radialGradient id="lab-bg" cx="50%" cy="50%" r="70%">
-      <stop offset="0%" stop-color="#151b23"/>
-      <stop offset="100%" stop-color="#0a0d12"/>
-    </radialGradient>
-
-    <!-- Crimson Spider Accent Gradient -->
-    <linearGradient id="spider-crimson" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#e53e3e"/>
-      <stop offset="100%" stop-color="#c53030"/>
-    </linearGradient>
+    <!-- Dark Engineering Graph Paper Pattern -->
+    <pattern id="graph-grid" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#162032" stroke-width="0.5"/>
+    </pattern>
 
     <style>
-      .hero-title {{
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Impact', sans-serif;
-        font-size: 38px;
-        font-weight: 900;
+      .hdr-name {{
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+        font-size: 36px;
+        font-weight: 800;
         letter-spacing: -0.5px;
         fill: #f0f6fc;
       }}
-      .alias-pill {{
-        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-        font-size: 10.5px;
+      .hdr-title-pill {{
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        font-size: 11px;
         font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        fill: #38bdf8;
+      }}
+      .hdr-sub {{
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        font-size: 13.5px;
+        font-weight: 500;
+        fill: #94a3b8;
+      }}
+      .meta-lbl {{
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        font-size: 9.5px;
+        font-weight: 600;
         letter-spacing: 1.5px;
         text-transform: uppercase;
-        fill: #fca5a5;
+        fill: #475569;
       }}
-      .lab-meta {{
-        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-        font-size: 10px;
+      .meta-val {{
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        font-size: 9.5px;
         font-weight: 600;
         letter-spacing: 1px;
-        fill: #8b949e;
-      }}
-      .status-tag {{
-        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-        font-size: 10px;
-        font-weight: 700;
-        letter-spacing: 1px;
-        fill: #4ade80;
+        fill: #38bdf8;
       }}
     </style>
   </defs>
 
-  <!-- Lab Chassis with Subtle 1px Border -->
-  <rect x="0.5" y="0.5" width="{W-1}" height="{H-1}" rx="8" fill="url(#lab-bg)" stroke="#262c36" stroke-width="1"/>
+  <!-- Notebook Chassis with Engineering Slate Background -->
+  <rect x="0.5" y="0.5" width="{W-1}" height="{H-1}" rx="8" fill="#0b0f17" stroke="#1e293b" stroke-width="1"/>
+  
+  <!-- Graph Paper Overlay -->
+  <rect x="1" y="1" width="{W-2}" height="{H-2}" rx="7" fill="url(#graph-grid)"/>
 
-  <!-- Subtle Spider Web Geometry Lines (Top Right Corner) -->
-  <path d="M {W-140} 0 L {W} 140" stroke="#21262d" stroke-width="0.75"/>
-  <path d="M {W-90} 0 L {W} 90" stroke="#21262d" stroke-width="0.75"/>
-  <path d="M {W-45} 0 L {W} 45" stroke="#21262d" stroke-width="0.75"/>
-  <path d="M {W-110} 30 Q {W-70} 70 {W-30} 110" stroke="#1f2937" stroke-width="0.75" fill="none"/>
-  <path d="M {W-75} 20 Q {W-50} 50 {W-20} 75" stroke="#1f2937" stroke-width="0.75" fill="none"/>
+  <!-- Left Technical Margin Guide Line (Drafting red/amber margin mark) -->
+  <line x1="28" y1="12" x2="28" y2="{H-12}" stroke="#ef4444" stroke-width="1" stroke-opacity="0.5"/>
+  <circle cx="28" cy="28" r="2.5" fill="#ef4444"/>
+  <circle cx="28" cy="{H-28}" r="2.5" fill="#ef4444"/>
 
-  <!-- Top Metadata Bar -->
-  <text x="36" y="32" class="lab-meta">LAB REF // INDIE-01</text>
-  <text x="210" y="32" class="status-tag">&#x25CF; {STATUS}</text>
-  <text x="{W-36}" y="32" class="lab-meta" text-anchor="end">{LOCATION}</text>
+  <!-- Top Notebook Metadata Header -->
+  <text x="44" y="28" class="meta-lbl">LOGBOOK REF: <tspan class="meta-val">MIDTOWN-LAB-2026</tspan></text>
+  <text x="{W-36}" y="28" class="meta-lbl" text-anchor="end">SYS: <tspan class="meta-val">ONLINE</tspan></text>
+
+  <!-- Technical Divider Line -->
+  <line x1="44" y1="38" x2="{W-36}" y2="38" stroke="#1e293b" stroke-width="0.75"/>
 
   <!-- Hero Name Block -->
-  <text x="36" y="96" class="hero-title">{BRAND_NAME}</text>
-
-  <!-- Peter Parker "Friendly Neighborhood Vibecoder" Crimson Sticker Pill -->
-  <g transform="translate(36, 114)">
-    <rect width="365" height="26" rx="4" fill="#7f1d1d" fill-opacity="0.35" stroke="#dc2626" stroke-width="0.75"/>
-    <text x="12" y="17" class="alias-pill">&#x25C6; {ALIAS}</text>
+  <text x="44" y="86" class="hdr-name">{NAME}</text>
+  
+  <!-- Vibecoder Lab Badge -->
+  <g transform="translate(305, 62)">
+    <rect width="118" height="24" rx="4" fill="#0284c7" fill-opacity="0.18" stroke="#0284c7" stroke-width="0.75"/>
+    <text x="59" y="16" class="hdr-title-pill" text-anchor="middle">{TITLE}</text>
   </g>
 
-  <!-- Subtle Webline Divider -->
-  <line x1="36" y1="162" x2="{W-36}" y2="162" stroke="#21262d" stroke-width="1"/>
-  <line x1="420" y1="162" x2="480" y2="162" stroke="#dc2626" stroke-width="1.5"/>
+  <!-- Subtitle -->
+  <text x="44" y="116" class="hdr-sub">{SUBTITLE}</text>
 
-  <!-- Bottom Coordinates & Origin -->
-  <text x="36" y="184" class="lab-meta">COORD: {COORDINATES}</text>
-  <text x="{W-36}" y="184" class="lab-meta" text-anchor="end">AUTONOMOUS AGENTS &amp; FULL-STACK TECH // @{USERNAME}</text>
+  <!-- Bottom Technical Drafting Rule -->
+  <line x1="44" y1="138" x2="{W-36}" y2="138" stroke="#1e293b" stroke-width="0.75"/>
+  <text x="44" y="158" class="meta-lbl">DISCIPLINE: AUTONOMOUS AGENTS &amp; FULL-STACK ARCHITECTURE</text>
+  <text x="{W-36}" y="158" class="meta-lbl" text-anchor="end">EXPERIMENT ARCHIVE // @{USERNAME}</text>
 </svg>'''
 
     ET.fromstring(svg)
 
-    out_path = os.path.join("assets", "parker-header.svg")
+    out_path = os.path.join("assets", "notebook-header.svg")
     with open(out_path, "w", encoding="utf-8") as f:
         f.write(svg)
-    print(f"Generated Peter Parker Lab Header: {out_path}")
+    print(f"Generated Engineering Notebook Header: {out_path}")
 
 
 # -----------------------------------------------------------------------------
-# 3. Web-Themed Contribution Heatmap SVG (Frameless + Crimson/Emerald Accents)
+# 3. Graph Paper Engineering Contribution Heatmap SVG
 # -----------------------------------------------------------------------------
-def generate_parker_heatmap():
+def generate_notebook_heatmap():
     raw_days = fetch_contributions_data()
     out_path = os.path.join("assets", "contrib-heatmap.svg")
     
@@ -219,16 +221,18 @@ def generate_parker_heatmap():
     if not contribs:
         contribs = raw_days
 
-    CELL, GAP, RAD, LEFT, TOP = 11.5, 3.5, 2.5, 32, 24
-    # Web-Slinger Palette: Void Slate -> Web Green -> Crimson Spark
-    COLORS = ["#161b22", "#064e3b", "#059669", "#10b981", "#ef4444"]
-    GRAY = "#6e7681"
+    CELL, GAP, RAD = 11.5, 3.5, 2
+    LEFT, TOP = 44, 42
+    # Lab Ink Palette: Deep slate substrate -> Blueprint cyan -> Intense cobalt & amber pulse
+    COLORS = ["#131a26", "#0369a1", "#0284c7", "#38bdf8", "#f59e0b"]
+    GRAY = "#64748b"
     MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
 
     n = len(contribs)
     NW = (n + 6) // 7
-    W = LEFT + NW * (CELL + GAP) + 12
-    H = TOP + 7 * (CELL + GAP) + 12
+    W = 860
+    H = 186
+    active_days = sum(1 for c in contribs if c["level"] > 0)
 
     labels = []
     rects = []
@@ -239,12 +243,12 @@ def generate_parker_heatmap():
         d = sd + datetime.timedelta(days=wk * 7)
         if d.month != last_m:
             last_m = d.month
-            labels.append(f'<text class="lbl" x="{LEFT+wk*(CELL+GAP)}" y="{TOP-8}">{MONTHS[d.month-1]}</text>')
+            labels.append(f'<text class="lbl" x="{LEFT+wk*(CELL+GAP)}" y="{TOP-12}">{MONTHS[d.month-1]}</text>')
 
-    for name, r in [("M", 1), ("W", 3), ("F", 5)]:
-        labels.append(f'<text class="lbl" x="6" y="{TOP+r*(CELL+GAP)+CELL-3}">{name}</text>')
+    for name, r in [("Mon", 1), ("Wed", 3), ("Fri", 5)]:
+        labels.append(f'<text class="lbl" x="12" y="{TOP+r*(CELL+GAP)+CELL-3}">{name}</text>')
 
-    REVEAL, DUR = 2.4, 0.4
+    REVEAL, DUR = 2.2, 0.4
     maxorder = (NW - 1) + 6 * 0.55
 
     for i, c in enumerate(contribs):
@@ -255,60 +259,87 @@ def generate_parker_heatmap():
         cls = "c g" if lvl >= 1 else "c e"
         rects.append(
             f'<rect class="{cls}" x="{x}" y="{y}" width="{CELL}" height="{CELL}" rx="{RAD}" '
-            f'fill="{COLORS[lvl]}" stroke="#21262d" stroke-width="0.5" style="animation-delay:{delay}s"/>'
+            f'fill="{COLORS[lvl]}" stroke="#1e293b" stroke-width="0.5" style="animation-delay:{delay}s"/>'
         )
 
     svg = f'''<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}" fill="none">
   <defs>
+    <!-- Graph Grid Pattern -->
+    <pattern id="heat-graph-grid" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#162032" stroke-width="0.5"/>
+    </pattern>
+
     <style>
       text.lbl {{ fill:{GRAY}; font-size:9.5px; font-weight:600; font-family:ui-monospace, SFMono-Regular, monospace; }}
+      text.telemetry {{ fill:#64748b; font-size:9.5px; font-weight:600; font-family:ui-monospace, SFMono-Regular, monospace; letter-spacing:1px; text-transform:uppercase; }}
+      text.strong {{ fill:#f0f6fc; font-weight:700; }}
       .c {{ transform-box:fill-box; transform-origin:center; opacity:0; animation:pop {DUR}s ease-out both; }}
       .g {{ animation:pop {DUR}s ease-out both, flash {DUR+0.15}s ease-out both; }}
-      @keyframes pop {{ 0%{{opacity:0;transform:scale(.2)}} 60%{{opacity:1;transform:scale(1.04)}} 100%{{opacity:1;transform:scale(1)}} }}
+      @keyframes pop {{ 0%{{opacity:0;transform:scale(.2)}} 60%{{opacity:1;transform:scale(1.05)}} 100%{{opacity:1;transform:scale(1)}} }}
       @keyframes flash {{ 0%{{filter:brightness(2)}} 50%{{filter:brightness(2)}} 100%{{filter:brightness(1)}} }}
       @media (prefers-reduced-motion: reduce) {{ .c {{ opacity:1 !important; animation:none !important; }} }}
     </style>
   </defs>
 
+  <!-- Chassis with Graph Grid -->
+  <rect x="0.5" y="0.5" width="{W-1}" height="{H-1}" rx="8" fill="#0b0f17" stroke="#1e293b" stroke-width="1"/>
+  <rect x="1" y="1" width="{W-2}" height="{H-2}" rx="7" fill="url(#heat-graph-grid)"/>
+
+  <!-- Top Status -->
+  <text x="24" y="24" class="telemetry">RESEARCH LOGS // COMMIT FREQUENCY</text>
+  <text x="{W-24}" y="24" class="telemetry" text-anchor="end"><tspan fill="#38bdf8">&#x25CF;</tspan> ACTIVE DAYS IN 2026: <tspan class="strong">{active_days}</tspan></text>
+
+  <!-- Labels & Rects -->
   {"".join(labels)}
   {"".join(rects)}
+
+  <!-- Legend -->
+  <g transform="translate({W-140}, {H-16})">
+    <text class="lbl" x="-26" y="8">Less</text>
+    <rect x="0" y="0" width="9" height="9" rx="1.5" fill="{COLORS[0]}" stroke="#1e293b" stroke-width="0.5"/>
+    <rect x="13" y="0" width="9" height="9" rx="1.5" fill="{COLORS[1]}"/>
+    <rect x="26" y="0" width="9" height="9" rx="1.5" fill="{COLORS[2]}"/>
+    <rect x="39" y="0" width="9" height="9" rx="1.5" fill="{COLORS[3]}"/>
+    <rect x="52" y="0" width="9" height="9" rx="1.5" fill="{COLORS[4]}"/>
+    <text class="lbl" x="68" y="8">More</text>
+  </g>
 </svg>'''
 
     ET.fromstring(svg)
 
     with open(out_path, "w", encoding="utf-8") as f:
         f.write(svg)
-    print(f"Generated Web Activity Matrix: {out_path}")
+    print(f"Generated Graph Paper Heatmap: {out_path}")
     return True
 
 
 # -----------------------------------------------------------------------------
-# 4. Generate Parker Indie Hacker README.md
+# 4. Generate Science/Engineering Lab Notebook README.md
 # -----------------------------------------------------------------------------
-def generate_parker_readme():
+def generate_notebook_readme():
     md = []
 
-    # Custom Header Banner
+    # Notebook Header Banner
     md.append('<div align="center">\n')
     md.append('  <a href="https://flynnmaxweld.github.io">\n')
-    md.append('    <img src="./assets/parker-header.svg" width="860" alt="Flynn Maxwel — Friendly Neighborhood Vibecoder" />\n')
+    md.append('    <img src="./assets/notebook-header.svg" width="860" alt="Flynn Maxwel — Vibecoder" />\n')
     md.append('  </a>\n')
     md.append('</div>\n\n')
 
-    # Casual Lab Notebook Quote
-    md.append(f'> *"With great compute comes great velocity."*\n>\n> Designing, building, and automating intelligent applications from **Tirunelveli, Tamil Nadu**.\n\n')
+    # Concise Scientific Statement
+    md.append(f'> **"{ABOUT}"**\n\n')
 
-    # Centered Frameless Heatmap Matrix
-    md.append('### 🕸️ Patrol &amp; Commit Telemetry\n\n')
+    # Graph Paper Activity Heatmap
+    md.append('### 📊 Research Activity &amp; Commit Logs\n\n')
     md.append('<div align="center">\n')
-    md.append('  <img src="./assets/contrib-heatmap.svg" alt="Activity Flow" />\n')
+    md.append('  <img src="./assets/contrib-heatmap.svg" width="860" alt="Research Activity Logs" />\n')
     md.append('</div>\n\n')
 
     md.append('---\n\n')
 
-    # Lab Tech Stack Matrix
-    md.append('### ⚡ Web-Shooters &amp; Lab Gear\n\n')
-    md.append('| Gear Category | Technologies &amp; Tools |\n')
+    # Lab Stack & Systems Architecture Matrix
+    md.append('### 🛠️ Systems &amp; Lab Architecture\n\n')
+    md.append('| Technical Domain | Frameworks, Languages &amp; Tooling |\n')
     md.append('| :--- | :--- |\n')
 
     badge_map = {
@@ -324,48 +355,44 @@ def generate_parker_readme():
         "PostgreSQL": "https://img.shields.io/badge/PostgreSQL-4169E1?style=flat-square&logo=postgresql&logoColor=white",
         "Git": "https://img.shields.io/badge/Git-F05032?style=flat-square&logo=git&logoColor=white",
         "Linux": "https://img.shields.io/badge/Linux-FCC624?style=flat-square&logo=linux&logoColor=black",
-        "Autonomous Agents": "https://img.shields.io/badge/Autonomous_Agents-DC2626?style=flat-square&logo=probot&logoColor=white",
+        "Autonomous Agents": "https://img.shields.io/badge/Autonomous_Agents-0284C7?style=flat-square&logo=probot&logoColor=white",
         "LLM Pipelines": "https://img.shields.io/badge/LLM_Pipelines-8B5CF6?style=flat-square&logo=openai&logoColor=white",
-        "Workflow Automation": "https://img.shields.io/badge/Automation-10B981?style=flat-square&logo=githubactions&logoColor=white"
+        "Workflow Systems": "https://img.shields.io/badge/Workflow_Systems-10B981?style=flat-square&logo=githubactions&logoColor=white"
     }
 
     if isinstance(SKILLS, dict):
         for category, items in SKILLS.items():
             badges = []
             for item in items:
-                url = badge_map.get(item, f"https://img.shields.io/badge/{item.replace(' ', '_')}-21262d?style=flat-square")
+                url = badge_map.get(item, f"https://img.shields.io/badge/{item.replace(' ', '_')}-1e293b?style=flat-square")
                 badges.append(f'![]({url})')
             md.append(f'| **{category}** | {" ".join(badges)} |\n')
     md.append('\n---\n\n')
 
-    # Selected Works / Deployments
-    md.append('### 🎒 Experiments &amp; Deployments\n\n')
+    # Selected Works / Experiments
+    md.append('### 📂 Research Prototypes &amp; Deployments\n\n')
     for work in FEATURED_WORKS:
         name = work.get("name", "Project")
         url = work.get("url", "#")
         desc = work.get("desc", "")
         md.append(f'- [**`{name}`**]({url}) &mdash; {desc}\n')
-    md.append(f'- [**`github.com/{USERNAME}`**](https://github.com/{USERNAME}) &mdash; All open-source repositories &amp; lab prototypes\n\n')
+    md.append(f'- [**`github.com/{USERNAME}`**](https://github.com/{USERNAME}) &mdash; All open-source repositories &amp; experiments\n\n')
 
     md.append('---\n\n')
 
-    # Connect Channels (Radio Frequency)
-    md.append('### 📻 Radio Frequencies\n\n')
+    # Connect Channels
+    md.append('### 🔗 Contact &amp; Channels\n\n')
     connects = []
     for s in SOCIALS:
         label = s.get("label", "Link")
         url = s.get("url", "#")
-        badge = s.get("badge")
-        if badge:
-            connects.append(f'[![{label}]({badge})]({url})')
-        else:
-            connects.append(f'[{label}]({url})')
+        connects.append(f'- [**{label}**]({url})')
 
-    md.append(" &nbsp; ".join(connects) + '\n')
+    md.append('\n'.join(connects) + '\n')
 
     with open("README.md", "w", encoding="utf-8") as f:
         f.writelines(md)
-    print("Generated Peter Parker Indie Hacker README.md")
+    print("Generated Engineering Notebook README.md")
 
 
 # -----------------------------------------------------------------------------
@@ -418,12 +445,12 @@ jobs:
 # -----------------------------------------------------------------------------
 if __name__ == "__main__":
     print("="*60)
-    print("Rendering Peter Parker Indie Hacker Suite...")
+    print("Rendering Science/Engineering Notebook Suite...")
     print("="*60)
 
-    generate_parker_header()
-    generate_parker_heatmap()
-    generate_parker_readme()
+    generate_notebook_header()
+    generate_notebook_heatmap()
+    generate_notebook_readme()
     generate_workflow()
 
     print("="*60)
